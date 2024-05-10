@@ -3,7 +3,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-
+import { API_ENDPOINT } from '../../../config';
 
 @Component({
   selector: 'app-register',
@@ -42,7 +42,7 @@ export class RegisterComponent implements OnInit{
     } else if(!this.validateEmail(user.email)){
       this.errorMessage = "Email is invalid, please try again!"
     } else {
-      this.http.post("http://localhost:5001/api/register", user, {
+      this.http.post(API_ENDPOINT+"/register", user, {
         withCredentials:true
       }).subscribe(()=>this.router.navigate(['/']),(err) => {
         this.errorMessage = err.error.message

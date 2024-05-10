@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Emitters } from '../../emitters/authEmitter';
+import { API_ENDPOINT } from '../../../config';
 
 @Component({
   selector: 'app-home',
@@ -17,7 +18,7 @@ export class HomeComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
-    this.http.get("http://localhost:5001/api/user", { withCredentials: true })
+    this.http.get(API_ENDPOINT+"/user", { withCredentials: true })
       .subscribe((res: any) => {
         if(res.role == "user"){
           this.router.navigate(['/'])

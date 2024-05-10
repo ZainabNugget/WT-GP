@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Emitters } from '../../emitters/authEmitter';
+import { API_ENDPOINT } from '../../../config';
 
 @Component({
   selector: 'app-navigation',
@@ -21,7 +22,7 @@ export class NavigationComponent implements OnInit{
   }
 
   logout():void{
-    this.http.post("http://localhost:5001/api/logout",{}, {withCredentials:true})
+    this.http.post(API_ENDPOINT+"/logout",{}, {withCredentials:true})
     .subscribe(() => this.authenticated = false, (err)=>{
       console.log("Error", err)
     });

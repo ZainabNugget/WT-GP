@@ -6,6 +6,7 @@ import { FormGroup, FormBuilder, ReactiveFormsModule } from '@angular/forms'; //
 import { Router } from '@angular/router';
 import { Emitters } from '../../emitters/authEmitter';
 import { TestserviceService } from '../../service/testservice.service';
+import { API_ENDPOINT } from '../../../config';
 
 @Component({
   selector: 'app-login',
@@ -40,7 +41,7 @@ export class LoginComponent  implements OnInit{
   if(!this.validateEmail(user.email)){
       this.errorMessage = "Email is invalid, please try again!"
     } else {
-      this.http.post("http://localhost:5001/api/login", user, {
+      this.http.post(API_ENDPOINT+"/login", user, {
         withCredentials:true
       }).subscribe(
         ()=>{
