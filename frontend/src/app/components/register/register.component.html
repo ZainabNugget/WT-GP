@@ -1,0 +1,21 @@
+<div class="container p-4">
+<form [formGroup]="form" (submit)="submit()" method="post">
+    <h1 class="h3 mb-3 fw-normal">Sign up</h1>
+    <div *ngIf="errorMessage" class="alert alert-danger" role="alert">{{ errorMessage }}</div>
+    <div class="form-floating">
+        <label for="floatingInput">Username</label>
+      <input required type="text" formControlName="username" class="form-control" id="floatingInput" placeholder="name" aria-required="true">
+    </div>
+    <div class="form-floating">
+        <label for="floatingInput">Email address</label>
+      <input required type="email" formControlName="email" class="form-control" id="floatingInput" placeholder="name@example.com" aria-required="true">
+    </div>
+    <div class="form-floating">
+    <label for="floatingPassword">Password</label>
+      <input required type="password" formControlName="password" class="form-control" id="floatingPassword" placeholder="password" aria-required="true">
+    </div>
+    <button class="btn w-100 py-2" type="submit" style="background-color: #F3D0D7;">Sign up</button>
+    <p class="mt-5 mb-3 text-body-secondary">Already have an account? <a href="/login">Sign-in</a></p>
+    <p class="mt-5 mb-3 text-body-secondary">&copy; 2014 Bootstrap</p>
+  </form>
+</div>

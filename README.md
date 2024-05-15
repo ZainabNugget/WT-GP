@@ -17,3 +17,17 @@
         then add 'NavigationComponent' to the imports within the component
     Add the component into the app.component.html file
         you can check the html tag in the component.ts file
+
+**First iteration of backend development**
+    Added sign up and log in mechanisms
+        used:
+            express and cookies
+            components
+            http client
+            API_ENDPOINT as the backend link
+            emitters and services
+
+**Second iteration of backend development**
+    To add, post details pages and comments
+                 images to the database
+
