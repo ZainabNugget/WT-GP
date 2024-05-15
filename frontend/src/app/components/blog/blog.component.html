@@ -1,15 +1,13 @@
 <div class="container">
   <div class="row mb-2">
     <!-- Main Content -->
-    <div class="col-md-8">
+    <div class="col-md-8"><!---This class holds the two cards and the blogpost-->
       <!-- Featured Posts -->
       <div class="row mb-4">
         <div class="col-md-6">
-          <!-- Featured Post 1 -->
+          <!-- Card 1 -->
           <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-            <!-- Featured Post Content -->
             <div class="col p-4 d-flex flex-column position-static">
-              <!-- Post Category -->
               <strong class="d-inline-block mb-2 text-primary-emphasis">World</strong>
               <!-- Post Title -->
               <h3 class="mb-0">Featured post</h3>
@@ -29,16 +27,39 @@
             </div>
           </div>
         </div>
-        <!-- Featured Post 2 (Similar structure as above) -->
-        <!-- You can add more featured posts here if needed -->
-      </div>
+        <div class="col-md-6">
+          <!-- Card 2 -->
+          <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="col p-4 d-flex flex-column position-static">
+              <strong class="d-inline-block mb-2 text-primary-emphasis">World</strong>
+              <!-- Post Title -->
+              <h3 class="mb-0">Featured post</h3>
+              <!-- Post Date -->
+              <div class="mb-1 text-body-secondary">Nov 12</div>
+              <!-- Post Excerpt -->
+              <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
+              <!-- Continue Reading Link -->
+              <a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
+                Continue reading
+                <svg class="bi"><use xlink:href="#chevron-right"/></svg>
+              </a>
+            </div>
+            <!-- Featured Post Image (Optional) -->
+            <div class="col-auto d-none d-lg-block">
+              <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+            </div>
+          </div>
+        </div>
+        
+      </div> <!--THE END OF THE CARDS-->
       
       <!-- Blog Posts -->
-      <div class="card w-100">
-        <div class="card-body">
-          <h1>Blog Posts</h1>
+      <div class = "recents"> 
+        <h1>Blog Posts</h1>     
           <div *ngIf="blogPost && blogPost.length > 0">
             <div *ngFor="let post of blogPost">
+              <div class="card w-100">
+                <div class="card-body">
               <h2><a href="post/{{post.slug}}">{{ post.title }}</a></h2>
               <p>{{ post.body }}</p>
             </div>
@@ -47,7 +68,9 @@
             No blog post data available.
           </div>
         </div>
+       </div>
       </div>
+
     </div>
     
     <!-- Sidebar -->
@@ -61,9 +84,18 @@
         <h4 class="font-italic">Archives</h4>
         <ol class="list-unstyled mb-0">
           <!-- List of Archives -->
-          <li><a href="#">March 2024</a></li>
-          <li><a href="#">February 2024</a></li>
-          <!-- Add more months here if needed -->
+          <li><a href="https://www.diychatroom.com/">March 2024</a></li>
+          <li><a href="https://www.diychatroom.com/">February 2024</a></li>
+          <li><a href="https://www.diychatroom.com/">January 2024</a></li>
+          <li><a href="https://www.diychatroom.com/">December 2023</a></li>
+          <li><a href="https://www.diychatroom.com/">November 2023</a></li>
+          <li><a href="https://www.diychatroom.com/">October 2023</a></li>
+          <li><a href="https://www.diychatroom.com/">September 2023</a></li>
+          <li><a href="https://www.diychatroom.com/">August 2023</a></li>
+          <li><a href="https://www.diychatroom.com/">July 2023</a></li>
+          <li><a href="https://www.diychatroom.com/">June 2023</a></li>
+          <li><a href="https://www.diychatroom.com/">May 2023</a></li>
+          <li><a href="https://www.diychatroom.com/">April 2023</a></li>
         </ol>
       </div>
 
@@ -71,9 +103,10 @@
         <h4 class="font-italic">Elsewhere</h4>
         <ol class="list-unstyled">
           <!-- Links to External Platforms -->
-          <li><a href="#">GitHub</a></li>
-          <li><a href="#">Twitter</a></li>
-          <!-- Add more links here if needed -->
+          <li><a href="https://github.com/ZainabNugget/WT-GP.git">GitHub</a></li>
+          <li><a href="https://github.com/ZainabNugget/WT-GP.git">Twitter</a></li>
+          <li><a href="https://github.com/ZainabNugget/WT-GP.git">Facebook</a></li>
+          <li><a href="https://github.com/ZainabNugget/WT-GP.git">Instagram</a></li>
         </ol>
       </div>
     </aside>
