@@ -3,8 +3,10 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/usersSchema');
+const Post = require('../models/postsSchema');
+const Comment = require('../models/commentsSchema');
 
-// Sign up/register
+// =========== REGISTER =================
 router.post('/register', async (req, res) => {
     let email = req.body.email;
     let password = req.body.password;
@@ -41,8 +43,9 @@ router.post('/register', async (req, res) => {
         })
     }
 });
+// =========== END OF REGISTER  =================
 
-// login endpoint
+// =========== LOGIN =================
 router.post('/login', async (req, res) => {
     let email = req.body.email;
     let password = req.body.password;
@@ -70,13 +73,15 @@ router.post('/login', async (req, res) => {
     })
     res.json({ message: 'Login & sessions successful' });
 });
+// =========== END OF LOGIN =================
 
-// clears cookies and logouts user automatically
+// =========== LOGS USER OUT  =================
 router.post('/logout', async (req, res) => {
     res.clearCookie('jwt').send('Cookie cleared successfully');
 })
+// =========== END OF LOG OUT =================
 
-//gets the cookies and has a user page
+// =========== GET USER  =================
 router.get('/user', async (req, res) => {
     try {
         const token = req.cookies['jwt'];
@@ -98,7 +103,7 @@ router.get('/user', async (req, res) => {
         const { password, ...data } = user.toJSON();
 
         res.send(data);
-        
+
     } catch (err) {
         // console.log("Error while verifying JWT token:", err);
         return res.status(401).json({
@@ -106,5 +111,109 @@ router.get('/user', async (req, res) => {
         });
     }
 });
+// =========== END OF GET USERS  =================
+
+// =========== MAKE A POST (ADMIN ONLY) =================
+router.post("/post", async (req, res) => {
+    try {
+        let title = req.body.title;
+        let body = req.body.body;
+        let summary = req.body.summary;
+
+        const post = new Post({
+            title: title,
+            body: body,
+            summary: summary
+        })
+
+        const result = await post.save();
+
+        console.log(result)
+  
+        let id = result._id.toString(); // Assuming `result` contains the post document
+        const commentSection = new Comment({
+            postId : id // Ensure postId is correctly assigned
+        });
+        const commentResult = await commentSection.save();
+        console.log(commentResult)
+        
+    } catch (err) {
+        console.log("Error" + err)
+    }
+})
+// =========== END OF MAKE POST =================
+
+// ===========  COMMENT SECTION  =================
+router.post('/comments', async (req, res) => {
+    try {
+        const postId = req.body.postId;
+        const username = req.body.username; 
+        const commentText = req.body.comment;
+
+        // Find if postId is in the database
+        const post = await Comment.findOne({postId: postId});
+        if (!post) { //not likely...
+            return res.status(404).json({ message: 'Post not found' });
+        }
+
+        // Push the new comment to the comments array
+        post.comments.push({ username: username, comment: commentText });
+
+        // Save the updated post
+        await post.save();
+
+        res.json({ message: 'Comment added successfully!' });
+    } catch (err) {
+        console.error('Error adding comment:', err);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
+
+// =========== END OF COMMENT SECTION =================
+
+// =========== COMMENTS =================
+router.post('/post-comments', async (req, res) => {
+    try {
+        console.log(req.body.postId);
+        const postId = req.body.postId;
+        const comments = await Comment.findOne({ postId: postId });
+        console.log(comments)
+        res.send(comments); // Send the comments as a JSON response
+    } catch (error) {
+        console.error('Error fetching comments:', error);
+    }
+});
+// =========== END OF COMMENTS =================
+
+// =========== BLOG POSTS =================
+router.get('/blog-post', async (req, res) => {
+    const post = await Post.find({})
+    res.send(post);
+})
+// =========== END OF BLOG POST =================
+
+// ===========  POST SLUG (ROUTE)=================
+router.get('/:slug', async (req, res) => {
+    const findPost = await Post.findOne({ slug: req.params.slug });
+    if (findPost == null) {
+        res.json('Post not found!');
+    } else {
+        res.send(findPost);
+    }
+})
+// =========== END OF POST SLUG =================
+
+// =========== DELETE POST =================
+router.post('/delete', async (req, res) => {
+    let title = "";
+    const findPost = await Post.findOne({ title: req.body.title });
+    console.log(findPost);
+    if (findPost == null) {
+        console.log("Post doesnt exist!")
+    } else {
+        findPost.collection.deleteOne(findPost);
+    }
+})
+// =========== END OF DELETE POST =================
 
 module.exports = router;
