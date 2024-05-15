@@ -1,18 +1,34 @@
 const mongoose = require('mongoose')
+const slugify = require('slugify');
 
-const postsSchema = new mongoose.Schema({
+const postSchema = new mongoose.Schema({
     title: {
       type: String,
-      required: true,
-      unique: true
+      required: true
     },
     summary: {
+        type:String,
+        maxLength:200
+    },
+    body: {
+        type: String,
+        required: true
+    },
+    username: {
+        type: String,
+    },
+    slug: {
         type: String,
         required: true,
-    },
-    paragraph: {
-        type:String
+        unique: true
     }
   })
 
-module.exports = mongoose.model('Posts', postsSchema)
+  postSchema.pre('validate', function(next) {
+    if (this.title) {
+      this.slug = slugify(this.title, { lower: true, strict: true })
+    }
+    next()
+  })
+
+module.exports = mongoose.model('Posts', postSchema)

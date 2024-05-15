@@ -1,0 +1,24 @@
+<div *ngIf="blogPost && admin">
+    <h1>Blog Posts</h1>
+    <div>
+      <h2>{{ blogPost.title }}</h2>
+      <p>{{ blogPost.summary }}</p>
+      <p>{{ blogPost.body }}</p>
+      <button class="btn btn-danger" (click)="delete()">Delete</button>
+      <button class="btn btn-primary">Edit</button>
+    </div>
+  </div>
+  <div *ngIf="blogPost && !admin">
+    <h1>Blog Posts</h1>
+    <div>
+      <h2>{{ blogPost.title }}</h2>
+      <p>{{ blogPost.summary }}</p>
+      <p>{{ blogPost.body }}</p>
+    </div>
+  </div>
+  <div class="col-12 mb-3" *ngFor="let comment of comments">   
+    <h1>Comments:</h1>
+     <p>{{ comment }}</p>
+</div>
+
+

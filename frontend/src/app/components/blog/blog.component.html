@@ -1,0 +1,11 @@
+<div *ngIf="blogPost && blogPost.length > 0">
+    <h1>Blog Posts</h1>
+    <div *ngFor="let post of blogPost">
+      <h2><a href="post/{{post.slug}}">{{ post.title }}</a></h2>
+      <p>{{ post.body }}</p>
+    </div>
+  </div>
+  <div *ngIf="!blogPost || blogPost.length === 0">
+    No blog post data available.
+  </div>
+  

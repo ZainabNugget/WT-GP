@@ -2,10 +2,6 @@ const express = require('express')
 const mongoose = require('mongoose')
 const session = require('express-session')
 
-// Database schema
-const Login = require('./models/loginSchema')
-const Posts = require('./models/postsSchema')
-
 // Session requirements
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
