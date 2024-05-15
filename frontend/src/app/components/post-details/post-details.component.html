@@ -19,9 +19,8 @@
             <p>No comments yet teehee</p>
         </div>
     </div>
-</div>
-<!-- End of comments -->
-<div *ngIf="blogPost && !admin">
+  </div>
+  <div *ngIf="blogPost && !admin">
     <h1>Blog Posts</h1>
     <div>
         <h2>{{ blogPost.title }}</h2>
@@ -39,6 +38,10 @@
     <div *ngIf="blogPost.comments.length == 0">
         <p>No comments yet teehee</p>
     </div>
+  </div>
+  <div class="col-12 mb-3" *ngFor="let comment of comments">   
+    <h1>Comments:</h1>
+     <p>{{ comment }}</p>
 </div>
 <!-- Make A Comment -->
 <div class="col-lg-12">

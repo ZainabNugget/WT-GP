@@ -105,7 +105,10 @@ router.get('/user', async (req, res) => {
         res.send(data);
 
     } catch (err) {
-        console.log("User not logged in")
+        // console.log("Error while verifying JWT token:", err);
+        return res.status(401).json({
+            message: "Unauthorized"
+        });
     }
 });
 // =========== END OF GET USERS  =================

@@ -22,11 +22,11 @@ export class PostDetailsComponent implements OnInit {
   blogPost: any;
   user: boolean = false;
   admin: boolean = false;
-  commentsForm: FormGroup;
+  comments: any;
   postId: any;
-  username: "";
-  errorMessage: string = '';
-
+  commentsForm: FormGroup;
+  username: string = "";
+  errorMessage: string ="";
 
   constructor(private route: ActivatedRoute,
     private http: HttpClient,
