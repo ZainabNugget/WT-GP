@@ -17,6 +17,16 @@ const postSchema = new mongoose.Schema({
     username: {
         type: String,
     },
+    comments: [{
+        username: {
+            type: String,
+            required: true
+        },
+        comment: {
+            type: String,
+            required: true
+        }
+    }],
     slug: {
         type: String,
         required: true,
