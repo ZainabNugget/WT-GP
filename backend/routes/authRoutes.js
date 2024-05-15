@@ -105,10 +105,7 @@ router.get('/user', async (req, res) => {
         res.send(data);
 
     } catch (err) {
-        // console.log("Error while verifying JWT token:", err);
-        return res.status(401).json({
-            message: "Unauthorized"
-        });
+        console.log("User not logged in")
     }
 });
 // =========== END OF GET USERS  =================
@@ -151,7 +148,8 @@ router.post('/comments', async (req, res) => {
         const commentText = req.body.comment;
 
         // Find if postId is in the database
-        const post = await Comment.findOne({postId: postId});
+        const post = await Post.findOne({_id: postId});
+        console.log("post is "+post)
         if (!post) { //not likely...
             return res.status(404).json({ message: 'Post not found' });
         }
