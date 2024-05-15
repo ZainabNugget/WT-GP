@@ -1,56 +1,76 @@
-<div *ngIf="blogPost && admin">
-    <h1>Blog Posts</h1>
-    <div>
-        <h2>{{ blogPost.title }}</h2>
-        <p>{{ blogPost.summary }}</p>
-        <p>{{ blogPost.body }}</p>
-        <button class="btn btn-danger" (click)="delete()">Delete</button>
-        <button class="btn btn-primary">Edit</button>
-        <!-- COMMENTS -->
+ <div class="postdetails">
+  <form class="form">
+    <div *ngIf="blogPost && admin">
+        <div>
+            <h2>{{ blogPost.title }}</h2>
+            <div class="card">
+             <div class="card-body">
+                <p>{{ blogPost.summary }}</p>
+                <p>{{ blogPost.body }}</p>
+                <button class="btn btn-danger" (click)="delete()">Delete</button>
+                <button class="btn btn-primary">Edit</button>
+             </div>
+            </div>
+
+            <!-- COMMENTS -->
+            <div *ngIf="blogPost.comments.length > 0">
+              <h2>Comments:</h2>
+               <div class="" *ngFor="let comment of blogPost.comments">
+                 <div class="card">
+                  <div class="card-body">
+                    <p>{{ comment.comment }}</p>
+                    <figcaption>{{ comment.username }}</figcaption>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="blogPost.comments.length == 0">
+                <p>No comments yet teehee</p>
+            </div>
+        </div>
+    </div>
+    <!-- End of comments -->
+
+    <div *ngIf="blogPost && !admin">
+        <div>
+            <h2>{{ blogPost.title }}</h2>
+            <div class="card">
+                <div class="card-body">
+                   <p>{{ blogPost.summary }}</p>
+                   <p>{{ blogPost.body }}</p>
+                </div>
+            </div>
+        </div>
         <div *ngIf="blogPost.comments.length > 0">
             <h1>Comments:</h1>
             <div class="" *ngFor="let comment of blogPost.comments">
+             <div class="card">
+               <div class="card-body">
                 <p>{{ comment.comment }}</p>
                 <figcaption>{{ comment.username }}</figcaption>
+               </div>
+             </div>
             </div>
         </div>
         <div *ngIf="blogPost.comments.length == 0">
             <p>No comments yet teehee</p>
         </div>
     </div>
-</div>
-<!-- End of comments -->
-<div *ngIf="blogPost && !admin">
-    <h1>Blog Posts</h1>
-    <div>
-        <h2>{{ blogPost.title }}</h2>
-        <p>{{ blogPost.summary }}</p>
-        <p>{{ blogPost.body }}</p>
+    <!-- Make A Comment -->
+    <div class="col-lg-12">
+        <div *ngIf="errorMessage" class="alert alert-danger" role="alert">{{ errorMessage }}</div>
+        <h5 class="comment-title">Leave an answer</h5>
+        <form class="row" (submit)="submit()" [formGroup]="commentsForm">
+            <div class="col-12 mb-3">
+                <label for="comment-message">Answer here:</label>
+                <textarea class="form-control" formControlName="comment" id="comment-message" placeholder="Comment here" cols="30"
+                    rows="6"></textarea>
+            </div>
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary" value="Post comment">Submit</button>
+            </div>
+        </form>
     </div>
-    <div *ngIf="blogPost.comments.length > 0">
-        <h1>Comments:</h1>
-        <div class="" *ngFor="let comment of blogPost.comments">
-            <p>{{ comment.comment }}</p>
-            <figcaption>{{ comment.username }}</figcaption>
-        </div>
-    </div>
-    <div *ngIf="blogPost.comments.length == 0">
-        <p>No comments yet teehee</p>
-    </div>
+  </form>
 </div>
-<!-- Make A Comment -->
-<div class="col-lg-12">
-    <div *ngIf="errorMessage" class="alert alert-danger" role="alert">{{ errorMessage }}</div>
-    <h5 class="comment-title">Leave an answer</h5>
-    <form class="row" (submit)="submit()" [formGroup]="commentsForm">
-        <div class="col-12 mb-3">
-            <label for="comment-message">Answer here:</label>
-            <textarea class="form-control" formControlName="comment" id="comment-message" placeholder="Comment here" cols="30"
-                rows="6"></textarea>
-        </div>
-        <div class="col-12">
-            <button type="submit" class="btn btn-primary" value="Post comment">Submit</button>
-        </div>
-    </form>
-</div>
-<!-- End of make a comment -->
+    <!-- End of make a comment -->
