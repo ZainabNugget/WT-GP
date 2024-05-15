@@ -25,7 +25,13 @@ const postSchema = new mongoose.Schema({
         comment: {
             type: String,
             required: true
-        }
+        },
+        likes: [{
+            username: {
+                type: String,
+                unique: true
+            }
+        }]
     }],
     slug: {
         type: String,

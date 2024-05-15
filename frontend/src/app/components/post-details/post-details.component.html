@@ -12,6 +12,7 @@
             <div class="" *ngFor="let comment of blogPost.comments">
                 <p>{{ comment.comment }}</p>
                 <figcaption>{{ comment.username }}</figcaption>
+                <button class="btn btn-primary" (click)="like(comment)"></button>
             </div>
         </div>
         <div *ngIf="blogPost.comments.length == 0">
@@ -32,6 +33,7 @@
         <div class="" *ngFor="let comment of blogPost.comments">
             <p>{{ comment.comment }}</p>
             <figcaption>{{ comment.username }}</figcaption>
+            <button class="btn btn-primary" (click)="like(comment)"></button>
         </div>
     </div>
     <div *ngIf="blogPost.comments.length == 0">
@@ -49,6 +51,9 @@
                 rows="6"></textarea>
         </div>
         <div class="col-12">
+            <!-- <div *ngIf="admin">           
+                <button class="btn btn-danger" (click)="deleteComment()">Delete</button>
+            </div> -->
             <button type="submit" class="btn btn-primary" value="Post comment">Submit</button>
         </div>
     </form>

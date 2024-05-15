@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { API_ENDPOINT } from '../../../config';
-import { CommentsComponent } from '../comments/comments.component';
 
 @Component({
   selector: 'app-blog',

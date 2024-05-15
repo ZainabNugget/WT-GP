@@ -116,24 +116,19 @@ router.post("/post", async (req, res) => {
         let title = req.body.title;
         let body = req.body.body;
         let summary = req.body.summary;
+        let username = req.body.username;
 
         const post = new Post({
             title: title,
             body: body,
-            summary: summary
+            summary: summary,
+            username: username
         })
 
         const result = await post.save();
 
         console.log(result)
-  
-        let id = result._id.toString(); // Assuming `result` contains the post document
-        const commentSection = new Comment({
-            postId : id // Ensure postId is correctly assigned
-        });
-        const commentResult = await commentSection.save();
-        console.log(commentResult)
-        
+
     } catch (err) {
         console.log("Error" + err)
     }
@@ -144,12 +139,12 @@ router.post("/post", async (req, res) => {
 router.post('/comments', async (req, res) => {
     try {
         const postId = req.body.postId;
-        const username = req.body.username; 
+        const username = req.body.username;
         const commentText = req.body.comment;
 
         // Find if postId is in the database
-        const post = await Post.findOne({_id: postId});
-        console.log("post is "+post)
+        const post = await Post.findOne({ _id: postId });
+        console.log("post is " + post)
         if (!post) { //not likely...
             return res.status(404).json({ message: 'Post not found' });
         }
@@ -168,20 +163,6 @@ router.post('/comments', async (req, res) => {
 });
 
 // =========== END OF COMMENT SECTION =================
-
-// =========== COMMENTS =================
-router.post('/post-comments', async (req, res) => {
-    try {
-        console.log(req.body.postId);
-        const postId = req.body.postId;
-        const comments = await Comment.findOne({ postId: postId });
-        console.log(comments)
-        res.send(comments); // Send the comments as a JSON response
-    } catch (error) {
-        console.error('Error fetching comments:', error);
-    }
-});
-// =========== END OF COMMENTS =================
 
 // =========== BLOG POSTS =================
 router.get('/blog-post', async (req, res) => {
@@ -203,9 +184,7 @@ router.get('/:slug', async (req, res) => {
 
 // =========== DELETE POST =================
 router.post('/delete', async (req, res) => {
-    let title = "";
     const findPost = await Post.findOne({ title: req.body.title });
-    console.log(findPost);
     if (findPost == null) {
         console.log("Post doesnt exist!")
     } else {
@@ -213,5 +192,62 @@ router.post('/delete', async (req, res) => {
     }
 })
 // =========== END OF DELETE POST =================
+
+// =========== LIKE POST =================
+// router.post('/like', async (req, res) => {
+//     let commentId = req.body.commentId;
+//     const postFound = await Post.findOne({ _id: req.body.postId })
+//     console.log(postFound)
+//     if (postFound == null) {
+//         console.log("no post")
+//     } else {
+//         console.log("post found")
+//         console.log("Comment" + commentId.likes);
+//         commentId.likes.push({username: req.body.username})
+//     }
+// })
+
+router.post('/like', async (req, res) => {
+    try {
+      const postId = req.body.postId;
+      const commentId = req.body.commentId;
+      const username = req.body.username; // Assuming you're sending the username in the request body
+  
+      // Find the post by its ID
+      const post = await Post.findById(postId);
+  
+      if (!post) {
+        return res.status(404).json({ message: 'Post not found' });
+      }
+  
+      // Find the specific comment within the comments array
+      const comment = post.comments.find(c => c._id.toString() === commentId);
+  
+      if (!comment) {
+        return res.status(404).json({ message: 'Comment not found' });
+      }
+  
+      // Check if the user has already liked the comment
+      const likedByUser = comment.likes.find(like => like.username === username);
+  
+      if (likedByUser) {
+        return res.status(400).json({ message: 'You have already liked this comment' });
+      }
+  
+      // If user hasn't liked the comment, add their like to the likes array
+      comment.likes.push({ username: username });
+  
+      // Save the updated post
+      await post.save();
+  
+      res.json({ message: 'Comment liked successfully' });
+    } catch (error) {
+      console.error('Error liking comment:', error);
+      res.status(500).json({ message: 'Failed to like comment', error: error.message });
+    }
+  });
+
+// =========== END OF LIKE POST =================
+
 
 module.exports = router;

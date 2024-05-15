@@ -1,18 +1,15 @@
 const mongoose = require('mongoose');
 
 const commentSchema = new mongoose.Schema({
-    postId: {
+    commentId: {
         type: mongoose.Schema.Types.ObjectId, 
         required: true
     },
-    comments: [{
+    likes: [{
         username: {
             type: String,
-            required: true
-        },
-        comment: {
-            type: String,
-            required: true
+            required: true,
+            unique:true
         }
     }],
     approved: {
@@ -21,4 +18,4 @@ const commentSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('PostComment', commentSchema);
+module.exports = mongoose.model('Comment', commentSchema);

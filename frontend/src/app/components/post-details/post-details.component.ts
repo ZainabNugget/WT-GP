@@ -1,17 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { setThrowInvalidWriteToSignalError } from '@angular/core/primitives/signals';
 import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { API_ENDPOINT } from '../../../config';
 import { Emitters } from '../../emitters/authEmitter';
-import { CommentsComponent } from '../comments/comments.component';
 
 @Component({
   selector: 'app-post-details',
   standalone: true,
   imports: [
-    CommentsComponent,
     CommonModule,
     ReactiveFormsModule
   ],
@@ -32,66 +31,80 @@ export class PostDetailsComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private http: HttpClient,
     private router: Router,
-    private FormBuilder: FormBuilder){}
+    private FormBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     this.commentsForm = this.FormBuilder.group({
       postId: "",
-      comment:"",
-      username: ""
-   })
-    this.route.params.subscribe(params =>{
+      comment: "",
+      username: "",
+      commentId: ""
+    })
+    this.route.params.subscribe(params => {
       this.slug = params['slug'];
       console.log(this.slug)
-      this.http.get(API_ENDPOINT+`/${this.slug}`)
-      .subscribe(
-        (data) => {
-          this.blogPost = data; // Store the fetched data in the property
-        },
-        (error) => {
-          console.error('Error fetching blog post:', error);
-        }
-      );
+      this.http.get(API_ENDPOINT + `/${this.slug}`)
+        .subscribe(
+          (data) => {
+            this.blogPost = data; // Store the fetched data in the property
+          },
+          (error) => {
+            console.error('Error fetching blog post:', error);
+          }
+        );
     })
     try {
-      this.http.get(API_ENDPOINT+"/user", { withCredentials: true })
-      .subscribe((res: any) => {
-        this.username = res.username;
-        if(res.role == "user"){
-          this.user = true;
-          Emitters.authEmitter.emit(true);
-        } else if(res.role =="admin"){
-          this.admin = true;
-          Emitters.authEmitter.emit(true);
-        } else {
-          console.log(false)
-        }
-      },
-      (err)=>{
-        console.log("There was an error getting the user, try logging in!")
-      })
+      this.http.get(API_ENDPOINT + "/user", { withCredentials: true })
+        .subscribe((res: any) => {
+          this.username = res.username;
+          if (res.role == "user") {
+            this.user = true;
+            Emitters.authEmitter.emit(true);
+          } else if (res.role == "admin") {
+            this.admin = true;
+            Emitters.authEmitter.emit(true);
+          } else {
+            console.log(false)
+          }
+        },
+          (err) => {
+            console.log("There was an error getting the user, try logging in!")
+          })
     } catch (error) {
       console.log("no user")
     }
-   };
+  };
 
-  delete() :void {
-    this.http.post(API_ENDPOINT+"/delete", this.blogPost, {
-      withCredentials:true
-    }).subscribe(()=>this.router.navigate(['/']),(err)=>{
+  delete(): void {
+    this.http.post(API_ENDPOINT + "/delete", this.blogPost, {
+      withCredentials: true
+    }).subscribe(() => this.router.navigate(['/']), (err) => {
       console.log(err)
     })
     this.router.navigate(['/']);
   }
 
-  submit():void{
+  like(comment: any): void {
+    // let comments = this.commentsForm.getRawValue()
+    // comments.postId = this.blogPost._id;
+    // comments.username = this.username;
+    // comments.commentId = comment;
+    // console.log(comment._id);
+    // this.http.post(API_ENDPOINT + '/like', comments, ({
+    //   withCredentials: true
+    // })).subscribe((err) => {
+    //   console.log(err);
+    // });
+  }
+
+  submit(): void {
     let comments = this.commentsForm.getRawValue()
     comments.postId = this.blogPost._id;
     comments.username = this.username;
-    if(this.username != undefined){
-      this.http.post(API_ENDPOINT+'/comments', comments, ({
+    if (this.username != undefined) {
+      this.http.post(API_ENDPOINT + '/comments', comments, ({
         withCredentials: true
-      })).subscribe((err)=>{
+      })).subscribe((err) => {
         console.log(err);
       })
     } else {
@@ -99,5 +112,5 @@ export class PostDetailsComponent implements OnInit {
     }
     window.location.reload()
   }
-  
+
 }
