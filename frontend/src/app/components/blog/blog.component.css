@@ -74,4 +74,9 @@
     }
   }
   
+  .col-md-8 {
+    max-width: 800px; /* Adjust the maximum width as needed */
+    margin: 0 auto; /* Center the content horizontally */
+    padding: 20px; /* Add padding around the content */
+  }
   
