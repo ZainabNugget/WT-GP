@@ -27,6 +27,7 @@ export class PostDetailsComponent implements OnInit {
   commentsForm: FormGroup;
   username: string = "";
   errorMessage: string ="";
+  sameuser: boolean = false;
 
   constructor(private route: ActivatedRoute,
     private http: HttpClient,
@@ -47,16 +48,30 @@ export class PostDetailsComponent implements OnInit {
         .subscribe(
           (data) => {
             this.blogPost = data; // Store the fetched data in the property
+            console.log(this.blogPost.approved)
           },
           (error) => {
             console.error('Error fetching blog post:', error);
           }
         );
     })
+     // ================== GET SPECIFIC USER  ==================
     try {
       this.http.get(API_ENDPOINT + "/user", { withCredentials: true })
         .subscribe((res: any) => {
           this.username = res.username;
+          if(this.username == undefined){
+            console.log("Not logged in!");
+          } else {
+            if(this.username == this.blogPost.username){
+              this.sameuser = true;
+              console.log("This is the same user that made the post :) ")
+            } else {
+              this.sameuser= false;
+              console.log("Not the same user wah")
+            }
+          }
+          // Get the role of user or admin
           if (res.role == "user") {
             this.user = true;
             Emitters.authEmitter.emit(true);
@@ -64,17 +79,19 @@ export class PostDetailsComponent implements OnInit {
             this.admin = true;
             Emitters.authEmitter.emit(true);
           } else {
-            console.log(false)
+            this.username = "";
           }
         },
           (err) => {
-            console.log("There was an error getting the user, try logging in!")
+            console.log("There was an error getting the user, try logging in!"+err)
           })
     } catch (error) {
-      console.log("no user")
+      console.log("no user"+error)
     }
+     // ================== END GET USER  ==================
   };
 
+    // ================== DELETE A POST (ADMIN ONLY) ==================
   delete(): void {
     this.http.post(API_ENDPOINT + "/delete", this.blogPost, {
       withCredentials: true
@@ -83,34 +100,65 @@ export class PostDetailsComponent implements OnInit {
     })
     this.router.navigate(['/']);
   }
+    // ================== END (ADMIN ONLY) ==================
 
+
+  // ================== LIKE A POST ==================
   like(comment: any): void {
-    // let comments = this.commentsForm.getRawValue()
-    // comments.postId = this.blogPost._id;
-    // comments.username = this.username;
-    // comments.commentId = comment;
-    // console.log(comment._id);
-    // this.http.post(API_ENDPOINT + '/like', comments, ({
-    //   withCredentials: true
-    // })).subscribe((err) => {
-    //   console.log(err);
-    // });
+    let comments = this.commentsForm.getRawValue()
+    comments.postId = this.blogPost._id;
+    comments.username = this.username;
+    comments.commentId = comment._id;
+    this.http.post(API_ENDPOINT + '/like', comments, ({
+      withCredentials: true
+    })).subscribe((err) => {
+      console.log(err);
+    });
+    // Reload to show the final work :()
+    window.location.reload();
   }
+  // ================== END  ==================
 
+    // ================== SUBMIT A COMMENT ==================
   submit(): void {
     let comments = this.commentsForm.getRawValue()
     comments.postId = this.blogPost._id;
     comments.username = this.username;
-    if (this.username != undefined) {
+    if (this.username == undefined) {
+      this.errorMessage = "User not logged in! please log in an try again!";
+    } else {
       this.http.post(API_ENDPOINT + '/comments', comments, ({
         withCredentials: true
       })).subscribe((err) => {
         console.log(err);
-      })
-    } else {
-      this.errorMessage = "User not logged in! please log in an try again!";
+      });
     }
     window.location.reload()
   }
+    // ================== END ==================
+
+  disapprove():void{
+    this.blogPost.approved = false; 
+    this.http.post(API_ENDPOINT+'/approve', this.blogPost,{withCredentials:true})
+    .subscribe((err)=>{console.log(err)});
+  }
+
+  approve():void{
+    this.blogPost.approved = true; 
+    this.http.post(API_ENDPOINT+'/approve', this.blogPost,{withCredentials:true})
+    .subscribe((err)=>{console.log(err)});
+  }
+
+    // ================== APPROVE COMMENT BY USER ==================
+  approveComment(comment: any):void{
+    let comments = this.commentsForm.getRawValue()
+    comments.postId = this.blogPost._id;
+    comments.commentId = comment._id;
+    // pass in all the comment information
+    this.http.post(API_ENDPOINT+'/approve-comment', comments,{withCredentials:true})
+    .subscribe((err)=>{console.log("There is an error hmm"+err)});
+  }
+    // ================== END ==================
+
 
 }

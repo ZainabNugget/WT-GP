@@ -85,10 +85,6 @@ router.post('/logout', async (req, res) => {
 router.get('/user', async (req, res) => {
     try {
         const token = req.cookies['jwt'];
-        if (!token) {
-            console.log("Error, missing JWT")
-        }
-
         const claims = jwt.verify(token, "secret");
         if (!claims) {
             console.log("Invalid, missing JWT")
@@ -144,10 +140,9 @@ router.post('/comments', async (req, res) => {
         const postId = req.body.postId;
         const username = req.body.username;
         const commentText = req.body.comment;
-
+        console.log(req.body);
         // Find if postId is in the database
         const post = await Post.findOne({ _id: postId });
-        console.log("post is " + post)
         if (!post) { //not likely...
             return res.status(404).json({ message: 'Post not found' });
         }
@@ -160,8 +155,7 @@ router.post('/comments', async (req, res) => {
 
         res.json({ message: 'Comment added successfully!' });
     } catch (err) {
-        console.error('Error adding comment:', err);
-        res.status(500).json({ message: 'Internal server error' });
+        res.status(500).send({ message: 'Internal server error' });
     }
 });
 
@@ -197,60 +191,42 @@ router.post('/delete', async (req, res) => {
 // =========== END OF DELETE POST =================
 
 // =========== LIKE POST =================
-// router.post('/like', async (req, res) => {
-//     let commentId = req.body.commentId;
-//     const postFound = await Post.findOne({ _id: req.body.postId })
-//     console.log(postFound)
-//     if (postFound == null) {
-//         console.log("no post")
-//     } else {
-//         console.log("post found")
-//         console.log("Comment" + commentId.likes);
-//         commentId.likes.push({username: req.body.username})
-//     }
-// })
 
 router.post('/like', async (req, res) => {
-    try {
-      const postId = req.body.postId;
-      const commentId = req.body.commentId;
-      const username = req.body.username; // Assuming you're sending the username in the request body
-  
-      // Find the post by its ID
-      const post = await Post.findById(postId);
-  
-      if (!post) {
-        return res.status(404).json({ message: 'Post not found' });
-      }
-  
-      // Find the specific comment within the comments array
-      const comment = post.comments.find(c => c._id.toString() === commentId);
-  
-      if (!comment) {
-        return res.status(404).json({ message: 'Comment not found' });
-      }
-  
-      // Check if the user has already liked the comment
-      const likedByUser = comment.likes.find(like => like.username === username);
-  
-      if (likedByUser) {
-        return res.status(400).json({ message: 'You have already liked this comment' });
-      }
-  
-      // If user hasn't liked the comment, add their like to the likes array
-      comment.likes.push({ username: username });
-  
-      // Save the updated post
-      await post.save();
-  
-      res.json({ message: 'Comment liked successfully' });
-    } catch (error) {
-      console.error('Error liking comment:', error);
-      res.status(500).json({ message: 'Failed to like comment', error: error.message });
-    }
-  });
+    const findPost = await Post.findById(req.body.postId);
+    console.log("This worksss midd")
+    findPost.comments.forEach(comment => {
+        if (comment._id == req.body.commentId) {
+            comment.likes++;
+            console.log(comment.likes);
+        }
+    });
+    console.log("This worksss finalll")
+    await findPost.save();
+
+});
+
 
 // =========== END OF LIKE POST =================
 
+// =========== APPROVE POST =================
+router.post('/approve', async (req,res)=>{
+    const findPost = await Post.findById(req.body._id)
+    findPost.approved = req.body.approved;
+})
+// =========== END OF APPROVE POST =================
+
+// =========== APPROVE COMMENT =================
+router.post('/approve-comment', async (req,res)=>{
+    const findPost = await Post.findById(req.body.postId)
+    findPost.comments.forEach(comment =>{
+        if(comment._id == req.body.commentId){
+            comment.userApproved = true;
+            console.log("So we found the comment..." + comment.userApproved);
+        }
+    })
+   await findPost.save();
+})
+// =========== END OF APPROVE COMMENT =================
 
 module.exports = router;

@@ -14,6 +14,9 @@ const postSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    image: {
+        type: String
+    },
     username: {
         type: String,
     },
@@ -26,17 +29,23 @@ const postSchema = new mongoose.Schema({
             type: String,
             required: true
         },
-        likes: [{
-            username: {
-                type: String,
-                unique: true
-            }
-        }]
+        userApproved: {
+            type: Boolean,
+            default: false
+        },
+        likes: {
+            type: Number,
+            default: 0
+        }
     }],
     slug: {
         type: String,
         required: true,
         unique: true
+    },
+    approved: {
+        type: Boolean,
+        default: true
     }
   })
 

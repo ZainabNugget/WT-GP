@@ -1,0 +1,8 @@
+.like-comment-container {
+    display: flex; /* Display children elements in a row */
+    align-items: center; /* Align items vertically in the center */
+}
+
+.like-button {
+    margin-right: 5px; /* Add margin between the button and the link */
+}

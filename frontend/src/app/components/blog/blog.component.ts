@@ -26,7 +26,6 @@ export class BlogComponent {
       .subscribe(
         (data) => {
           this.blogPost = data; // Store the fetched data in the property
-          console.log(this.blogPost)
         },
         (error) => {
           console.error('Error fetching blog post:', error);
@@ -34,7 +33,13 @@ export class BlogComponent {
       );
   }
 
-  click() : void{
+  searchText: string = '';
+  closestMatch: any;
 
+  onSearchInput(event: any) {
+    this.searchText = event.target.value.trim(); // Trim any leading/trailing whitespace
+     this.closestMatch = this.blogPost.filter((post: { title: string; }) => {
+      return post.title.toLowerCase().includes(this.searchText.toLowerCase());
+    });
   }
 }
