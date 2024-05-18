@@ -1,14 +1,23 @@
-.postdetails {
+ .postdetails {
     display: flex;
-    justify-content: center;
-    align-items: center; /* Vertically center the form */
-    height: 100%; /* Ensure the container takes up the full height */
-} 
-.form {
-    max-width: 900px; /* Set a maximum width for the form */
-    width: 100%; /* Ensure the form takes up the available width */
-    padding: 20px; /* Add padding for spacing */
-    border: 1px solid #ccc; /* Add a border for visual separation */
-    border-radius: 5px; /* Add border radius for rounded corners */
+    background-color: rgb(182, 177, 180);
+    flex: 0 0 auto; /* Take up remaining space */
+    padding: 20px; /* Add padding */
+    margin-right: 20px; /* Add margin to separate from the sidebar */
+  }
+  
+  .form {
+    background-color: #fff;
+    max-width: 1200px;
+    width: 100%;
+    padding: 20px;
+    border: 1px solid #100f0f;
+    border-radius: 5px;
+  }
+  
+  .sidebar {
+    flex: 0 0 10%; /* Set width of sidebar to 15% of the container */
+    background-color: #f0f0f0;
+    padding: 20px;
   }
   
