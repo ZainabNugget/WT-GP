@@ -26,8 +26,9 @@ export class PostDetailsComponent implements OnInit {
   postId: any;
   commentsForm: FormGroup;
   username: string = "";
-  errorMessage: string ="";
+  errorMessage: string = "";
   sameuser: boolean = false;
+  loggedIn = false;
 
   constructor(private route: ActivatedRoute,
     private http: HttpClient,
@@ -46,28 +47,30 @@ export class PostDetailsComponent implements OnInit {
       console.log(this.slug)
       this.http.get(API_ENDPOINT + `/${this.slug}`)
         .subscribe(
-          (data:any) => {
+          (data: any) => {
             this.blogPost = data; // Store the fetched data in the property
             console.log(this.blogPost.approved)
           },
-          (error:any) => {
+          (error: any) => {
             console.error('Error fetching blog post:', error);
           }
         );
     })
-     // ================== GET SPECIFIC USER  ==================
+    // ================== GET SPECIFIC USER  ==================
     try {
       this.http.get(API_ENDPOINT + "/user", { withCredentials: true })
         .subscribe((res: any) => {
           this.username = res.username;
-          if(this.username == undefined){
+          if (this.username == undefined) {
             console.log("Not logged in!");
+            this.loggedIn = false;
           } else {
-            if(this.username == this.blogPost.username){
+            this.loggedIn = true;
+            if (this.username == this.blogPost.username) {
               this.sameuser = true;
               console.log("This is the same user that made the post :) ")
             } else {
-              this.sameuser= false;
+              this.sameuser = false;
               console.log("Not the same user wah")
             }
           }
@@ -82,16 +85,16 @@ export class PostDetailsComponent implements OnInit {
             this.username = "";
           }
         },
-          (err:any) => {
-            console.log("There was an error getting the user, try logging in!"+err)
+          (err: any) => {
+            console.log("There was an error getting the user, try logging in!" + err)
           })
     } catch (error) {
-      console.log("no user"+error)
+      console.log("no user" + error)
     }
-     // ================== END GET USER  ==================
+    // ================== END GET USER  ==================
   };
 
-    // ================== DELETE A POST (ADMIN ONLY) ==================
+  // ================== DELETE A POST (ADMIN ONLY) ==================
   delete(): void {
     this.http.post(API_ENDPOINT + "/delete", this.blogPost, {
       withCredentials: true
@@ -100,7 +103,7 @@ export class PostDetailsComponent implements OnInit {
     })
     this.router.navigate(['/']);
   }
-    // ================== END (ADMIN ONLY) ==================
+  // ================== END (ADMIN ONLY) ==================
 
 
   // ================== LIKE A POST ==================
@@ -111,7 +114,7 @@ export class PostDetailsComponent implements OnInit {
     comments.commentId = comment._id;
     this.http.post(API_ENDPOINT + '/like', comments, ({
       withCredentials: true
-    })).subscribe((err:any) => {
+    })).subscribe((err: any) => {
       console.log(err);
     });
     // Reload to show the final work :()
@@ -119,46 +122,50 @@ export class PostDetailsComponent implements OnInit {
   }
   // ================== END  ==================
 
-    // ================== SUBMIT A COMMENT ==================
+  // ================== SUBMIT A COMMENT ==================
   submit(): void {
     let comments = this.commentsForm.getRawValue()
     comments.postId = this.blogPost._id;
     comments.username = this.username;
-    if (this.username == undefined) {
-      this.errorMessage = "User not logged in! please log in an try again!";
+    if (!this.loggedIn) {
+      this.errorMessage = "User not logged in!"
     } else {
-      this.http.post(API_ENDPOINT + '/comments', comments, ({
-        withCredentials: true
-      })).subscribe((err:any) => {
-        console.log(err);
-      });
+      if (this.username == undefined) {
+        this.errorMessage = "User not logged in! please log in an try again!";
+      } else {
+        this.http.post(API_ENDPOINT + '/comments', comments, ({
+          withCredentials: true
+        })).subscribe((err: any) => {
+          console.log(err);
+        });
+      }
+      window.location.reload()
     }
-    window.location.reload()
   }
-    // ================== END ==================
+  // ================== END ==================
 
-  disapprove():void{
-    this.blogPost.approved = false; 
-    this.http.post(API_ENDPOINT+'/approve', this.blogPost,{withCredentials:true})
-    .subscribe((err:any)=>{console.log(err)});
-  }
-
-  approve():void{
-    this.blogPost.approved = true; 
-    this.http.post(API_ENDPOINT+'/approve', this.blogPost,{withCredentials:true})
-    .subscribe((err:any)=>{console.log(err)});
+  disapprove(): void {
+    this.blogPost.approved = false;
+    this.http.post(API_ENDPOINT + '/approve', this.blogPost, { withCredentials: true })
+      .subscribe((err: any) => { console.log(err) });
   }
 
-    // ================== APPROVE COMMENT BY USER ==================
-  approveComment(comment: any):void{
+  approve(): void {
+    this.blogPost.approved = true;
+    this.http.post(API_ENDPOINT + '/approve', this.blogPost, { withCredentials: true })
+      .subscribe((err: any) => { console.log(err) });
+  }
+
+  // ================== APPROVE COMMENT BY USER ==================
+  approveComment(comment: any): void {
     let comments = this.commentsForm.getRawValue()
     comments.postId = this.blogPost._id;
     comments.commentId = comment._id;
     // pass in all the comment information
-    this.http.post(API_ENDPOINT+'/approve-comment', comments,{withCredentials:true})
-    .subscribe((err:any)=>{console.log("There is an error hmm"+err)});
+    this.http.post(API_ENDPOINT + '/approve-comment', comments, { withCredentials: true })
+      .subscribe((err: any) => { console.log("There is an error hmm" + err) });
   }
-    // ================== END ==================
+  // ================== END ==================
 
 
 }

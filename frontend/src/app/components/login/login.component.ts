@@ -18,53 +18,55 @@ import { API_ENDPOINT } from '../../../config';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent  implements OnInit{
+export class LoginComponent implements OnInit {
   form: FormGroup;
   errorMessage: string = '';
 
   constructor(
-      private FormBuilder: FormBuilder,
-      private http: HttpClient,
-      private router: Router
-  ){}
+    private FormBuilder: FormBuilder,
+    private http: HttpClient,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.form = this.FormBuilder.group({
-      email:'',
-      password:''
-   })
+      email: '',
+      password: ''
+    })
   }
 
-  submit() : void {
+  submit(): void {
     let user = this.form.getRawValue()
     // IT works yay
-  if(!this.validateEmail(user.email)){
+    if (user.username == '' || user.email == '' || user.password == '') {
+      this.errorMessage = "Please enter your details!"
+    } else if (!this.validateEmail(user.email)) {
       this.errorMessage = "Email is invalid, please try again!"
     } else {
-      this.http.post(API_ENDPOINT+"/login", user, {
-        withCredentials:true
+      this.http.post(API_ENDPOINT + "/login", user, {
+        withCredentials: true
       }).subscribe(
-        ()=>{
+        () => {
           this.router.navigate(['/'])
           Emitters.authEmitter.emit(true);
         },
-        (err:any) => {
-        this.errorMessage = err.error.message
-        console.log("Error", err.error.message)
-        Emitters.authEmitter.emit(false);
-      })
+        (err: any) => {
+          this.errorMessage = err.error.message
+          console.log("Error", err.error.message)
+          Emitters.authEmitter.emit(false);
+        })
     }
   }
 
-  
+
 
   validateEmail = (email: any) => {
     var emailRegex = /^[\w-]+(?:\.[\w-]+)*@(?:[\w-]+\.)+[a-zA-Z]{2,7}$/; //regex to match email
-      if(email.match(emailRegex)){
-        return true;
-      } else {
-        return false;
-      }
+    if (email.match(emailRegex)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
 }

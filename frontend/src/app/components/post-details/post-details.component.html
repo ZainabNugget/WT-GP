@@ -59,7 +59,7 @@
 <!-- End of comments -->
 <!-- Make A Comment -->
 <div class="col-lg-12">
-    <div *ngIf="errorMessage" class="alert alert-danger" role="alert">{{ errorMessage }}</div>
+    <div *ngIf="errorMessage" class="alert alert-warning" role="alert">{{ errorMessage }}</div>
     <h5 class="comment-title">Leave an answer</h5>
     <form class="row" (submit)="submit()" [formGroup]="commentsForm">
         <div class="col-12 mb-3">
