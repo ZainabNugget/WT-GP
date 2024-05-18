@@ -41,16 +41,16 @@ export class PostDetailsComponent implements OnInit {
       username: "",
       commentId: ""
     })
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params: { [x: string]: string; }) => {
       this.slug = params['slug'];
       console.log(this.slug)
       this.http.get(API_ENDPOINT + `/${this.slug}`)
         .subscribe(
-          (data) => {
+          (data:any) => {
             this.blogPost = data; // Store the fetched data in the property
             console.log(this.blogPost.approved)
           },
-          (error) => {
+          (error:any) => {
             console.error('Error fetching blog post:', error);
           }
         );
@@ -82,7 +82,7 @@ export class PostDetailsComponent implements OnInit {
             this.username = "";
           }
         },
-          (err) => {
+          (err:any) => {
             console.log("There was an error getting the user, try logging in!"+err)
           })
     } catch (error) {
@@ -95,7 +95,7 @@ export class PostDetailsComponent implements OnInit {
   delete(): void {
     this.http.post(API_ENDPOINT + "/delete", this.blogPost, {
       withCredentials: true
-    }).subscribe(() => this.router.navigate(['/']), (err) => {
+    }).subscribe(() => this.router.navigate(['/']), (err: any) => {
       console.log(err)
     })
     this.router.navigate(['/']);
@@ -111,7 +111,7 @@ export class PostDetailsComponent implements OnInit {
     comments.commentId = comment._id;
     this.http.post(API_ENDPOINT + '/like', comments, ({
       withCredentials: true
-    })).subscribe((err) => {
+    })).subscribe((err:any) => {
       console.log(err);
     });
     // Reload to show the final work :()
@@ -129,7 +129,7 @@ export class PostDetailsComponent implements OnInit {
     } else {
       this.http.post(API_ENDPOINT + '/comments', comments, ({
         withCredentials: true
-      })).subscribe((err) => {
+      })).subscribe((err:any) => {
         console.log(err);
       });
     }
@@ -140,13 +140,13 @@ export class PostDetailsComponent implements OnInit {
   disapprove():void{
     this.blogPost.approved = false; 
     this.http.post(API_ENDPOINT+'/approve', this.blogPost,{withCredentials:true})
-    .subscribe((err)=>{console.log(err)});
+    .subscribe((err:any)=>{console.log(err)});
   }
 
   approve():void{
     this.blogPost.approved = true; 
     this.http.post(API_ENDPOINT+'/approve', this.blogPost,{withCredentials:true})
-    .subscribe((err)=>{console.log(err)});
+    .subscribe((err:any)=>{console.log(err)});
   }
 
     // ================== APPROVE COMMENT BY USER ==================
@@ -156,7 +156,7 @@ export class PostDetailsComponent implements OnInit {
     comments.commentId = comment._id;
     // pass in all the comment information
     this.http.post(API_ENDPOINT+'/approve-comment', comments,{withCredentials:true})
-    .subscribe((err)=>{console.log("There is an error hmm"+err)});
+    .subscribe((err:any)=>{console.log("There is an error hmm"+err)});
   }
     // ================== END ==================
 

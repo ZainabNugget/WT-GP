@@ -23,7 +23,7 @@ export class NavigationComponent implements OnInit{
 
   logout():void{
     this.http.post(API_ENDPOINT+"/logout",{}, {withCredentials:true})
-    .subscribe(() => this.authenticated = false, (err)=>{
+    .subscribe(() => this.authenticated = false, (err:any)=>{
       console.log("Error", err)
     });
   }

@@ -39,7 +39,7 @@ export class HomeComponent implements OnInit {
         this.router.navigate(['/'])
         this.message = `Hi ${res.username}`;
         Emitters.authEmitter.emit(true);
-      }, (err) => {
+      }, (err:any) => {
         this.message = "You are not logged in!";
         Emitters.authEmitter.emit(false);
       })

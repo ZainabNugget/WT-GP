@@ -41,7 +41,7 @@ ngOnInit(): void {
  .subscribe((res: any) => {
     this.username = res.username;
    Emitters.authEmitter.emit(true);
- }, (err) => {
+ }, (err: any) => {
    console.log("Not logged in!")
    Emitters.authEmitter.emit(false);
  })
@@ -58,7 +58,7 @@ ngOnInit(): void {
         }).subscribe(() => {
           this.router.navigate(['/']);
           this.errorMessage = "POSTED!  ";
-        },(err) => {
+        },(err: any) => {
           this.errorMessage = "We could not post your blog! :( "
           console.log("Error", err)
         })

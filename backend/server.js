@@ -1,6 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const session = require('express-session')
+const path = require('path');
 
 // Session requirements
 const cors = require('cors')
@@ -10,6 +11,7 @@ const cookieParser = require('cookie-parser')
 const Routes = require('./routes/authRoutes')
 
 const app = express()
+
 app.use(cookieParser())
 // Session
 app.use(session({
@@ -22,16 +24,6 @@ app.use(session({
   }
 }));
 
-app.get('/', function(req, res){
-  if(req.session.page_views){
-     req.session.page_views++;
-     res.send("You visited this page " + req.session.page_views + " times");
-  } else {
-     req.session.page_views = 1;
-     res.send("Welcome to this page for the first time!");
-  }
-});
-
 // CORS setup
 app.use(cors({
   credentials: true,
@@ -41,8 +33,13 @@ app.use(cors({
 }));
 
 app.use(express.json())
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use("/api", Routes)
+
+app.get('/*', function(req, res) {
+  res.status(200).sendFile(path.resolve(__dirname + "/public/index.html"));
+});
 
 app.get('/',  (req, res) =>{
   res.send('Hello, World!');
