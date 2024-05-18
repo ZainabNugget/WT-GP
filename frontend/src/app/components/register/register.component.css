@@ -4,23 +4,23 @@ body {
 }
 
 body {
-  background-color: #000; /* Black background for the page */
+  background-color: #000; 
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   margin: 0;
-  padding-top: 100px; /* Adjust this value based on your sticky header's height */
+  padding-top: 100px; 
 }
 
 .form-signin {
-  background-color: #fff; /* White background for the form */
+  background-color: #fff; 
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   max-width: 400px;
   width: 100%;
-  margin-top: 100px; /* Space between form and sticky header */
+  margin-top: 100px; 
 }
 
 .form-floating {
