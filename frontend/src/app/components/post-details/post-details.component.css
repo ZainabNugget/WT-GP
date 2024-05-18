@@ -6,3 +6,26 @@
 .like-button {
     margin-right: 5px; /* Add margin between the button and the link */
 }
+ .postdetails {
+    display: flex;
+    background-color: rgb(182, 177, 180);
+    flex: 0 0 auto; /* Take up remaining space */
+    padding: 20px; /* Add padding */
+    margin-right: 20px; /* Add margin to separate from the sidebar */
+  }
+  
+  .form {
+    background-color: #fff;
+    max-width: 1200px;
+    width: 100%;
+    padding: 20px;
+    border: 1px solid #100f0f;
+    border-radius: 5px;
+  }
+  
+  .sidebar {
+    flex: 0 0 10%; /* Set width of sidebar to 15% of the container */
+    background-color: #f0f0f0;
+    padding: 20px;
+  }
+  
