@@ -9,7 +9,7 @@
   <!-- Custom CSS -->
   <style>
     body {
-      background-color: #e0e0e0; /* Grey background for the page */
+      background-color: #22092c;
     }
 
     .box-wrapper {
@@ -18,145 +18,164 @@
       padding: 20px; 
       border-radius: 8px; 
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+      margin-bottom: 20px; 
     }
 
-    .container{
+    .container {
       background-color: #fff;
     }
 
     .featured,
     .card {
       border: 2px solid #000;
+      background-color:#D4ced9;
+    }
+
+    .card {
+      margin-bottom: 20px; /* Added margin to separate the cards */
+    }
+
+    .blog-sidebar {
+      padding: 20px;
+      border: 2px solid #000; /* Added border to the sidebar */
+      background-color: #f8f9fa; /* Light background for the sidebar */
+    }
+
+    .recents h1 {
+      margin-bottom: 20px; /* Added margin to space out the heading */
+    }
+
+    .recents .card {
+      margin-bottom: 20px; /* Added margin to separate the blog post cards */
     }
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="container box-wrapper">
     <div class="row justify-content-center">
-      <div class="col-md-8">
+      <div class="col-md-12">
         <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary" name="featured">
-          <div class="col-lg-6 px-0">
+          <div class="col-lg-12 px-0">
             <h1 class="display-4 fst-italic">Title of a longer featured blog post</h1>
             <p class="lead my-3">Multiple lines of text that form the lede, informing new readers quickly and efficiently about what’s most interesting in this post’s contents.</p>
             <p class="lead mb-0"><a href="#" class="text-body-emphasis fw-bold">Continue reading...</a></p>
           </div>
         </div>
+      </div>
+    </div>
 
-      <div class="container">
-        <div class="row mb-2">
-          <!-- Main Content -->
-          <div class="col-md-8">
-            <!-- Featured Posts -->
-            <div class="row mb-4">
-              <div class="col-md-6">
-                <!-- Card 1 -->
-                <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                  <div class="col p-4 d-flex flex-column position-static">
-                    <strong class="d-inline-block mb-2 text-primary-emphasis">World</strong>
-                    <!-- Post Title -->
-                    <h3 class="mb-0">Featured post</h3>
-                    <!-- Post Date -->
-                    <div class="mb-1 text-body-secondary">Nov 12</div>
-                    <!-- Post Excerpt -->
-                    <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-                    <!-- Continue Reading Link -->
-                    <a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
-                      Continue reading
-                      <svg class="bi"><use xlink:href="#chevron-right"/></svg>
-                    </a>
-                  </div>
-                  <!-- Featured Post Image (Optional) -->
-                  <div class="col-auto d-none d-lg-block">
-                    <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-                  </div>
-                </div>
+    <div class="row">
+      <!-- Main Content -->
+      <div class="col-md-8">
+        <!-- Featured Posts -->
+        <div class="row mb-4">
+          <div class="col-md-6">
+            <!-- Card 1 -->
+            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+              <div class="col p-4 d-flex flex-column position-static">
+                <strong class="d-inline-block mb-2 text-primary-emphasis">World</strong>
+                <!-- Post Title -->
+                <h3 class="mb-0">Featured post</h3>
+                <!-- Post Date -->
+                <div class="mb-1 text-body-secondary">Nov 12</div>
+                <!-- Post Excerpt -->
+                <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
+                <!-- Continue Reading Link -->
+                <a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
+                  Continue reading
+                  <svg class="bi"><use xlink:href="#chevron-right"/></svg>
+                </a>
               </div>
-              <div class="col-md-6">
-                <!-- Card 2 -->
-                <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                  <div class="col p-4 d-flex flex-column position-static">
-                    <strong class="d-inline-block mb-2 text-primary-emphasis">World</strong>
-                    <!-- Post Title -->
-                    <h3 class="mb-0">Featured post</h3>
-                    <!-- Post Date -->
-                    <div class="mb-1 text-body-secondary">Nov 12</div>
-                    <!-- Post Excerpt -->
-                    <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-                    <!-- Continue Reading Link -->
-                    <a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
-                      Continue reading
-                      <svg class="bi"><use xlink:href="#chevron-right"/></svg>
-                    </a>
-                  </div>
-                  <!-- Featured Post Image (Optional) -->
-                  <div class="col-auto d-none d-lg-block">
-                    <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Blog Posts -->
-            <div class="recents">
-              <h1>Blog Posts</h1>
-              <div *ngIf="blogPost && blogPost.length > 0">
-                <div *ngFor="let post of blogPost">
-                  <div class="card w-100">
-                    <div class="card-body">
-                      <h2><a href="post/{{post.slug}}">{{ post.title }}</a></h2>
-                      <p>{{ post.body }}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div *ngIf="!blogPost || blogPost.length === 0">
-                No blog post data available.
+              <!-- Featured Post Image (Optional) -->
+              <div class="col-auto d-none d-lg-block">
+                <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
               </div>
             </div>
           </div>
-          
-          <!-- Sidebar -->
-          <aside class="col-md-4 blog-sidebar">
-            <div class="p-3 mb-3 bg-light rounded">
-              <h4 class="font-italic">About</h4>
-              <p class="mb-0">This is a book review and recommendations website, where users converse about books they read. There are several book clubs depending on your choice of books</p>
+          <div class="col-md-6">
+            <!-- Card 2 -->
+            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+              <div class="col p-4 d-flex flex-column position-static">
+                <strong class="d-inline-block mb-2 text-primary-emphasis">World</strong>
+                <!-- Post Title -->
+                <h3 class="mb-0">Featured post</h3>
+                <!-- Post Date -->
+                <div class="mb-1 text-body-secondary">Nov 12</div>
+                <!-- Post Excerpt -->
+                <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
+                <!-- Continue Reading Link -->
+                <a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
+                  Continue reading
+                  <svg class="bi"><use xlink:href="#chevron-right"/></svg>
+                </a>
+              </div>
+              <!-- Featured Post Image (Optional) -->
+              <div class="col-auto d-none d-lg-block">
+                <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+              </div>
             </div>
+          </div>
+        </div>
 
-            <div class="p-3">
-              <h4 class="font-italic">Archives</h4>
-              <ol class="list-unstyled mb-0">
-                <!-- List of Archives -->
-                <li><a href="https://www.diychatroom.com/">March 2024</a></li>
-                <li><a href="https://www.diychatroom.com/">February 2024</a></li>
-                <li><a href="https://www.diychatroom.com/">January 2024</a></li>
-                <li><a href="https://www.diychatroom.com/">December 2023</a></li>
-                <li><a href="https://www.diychatroom.com/">November 2023</a></li>
-                <li><a href="https://www.diychatroom.com/">October 2023</a></li>
-                <li><a href="https://www.diychatroom.com/">September 2023</a></li>
-                <li><a href="https://www.diychatroom.com/">August 2023</a></li>
-                <li><a href="https://www.diychatroom.com/">July 2023</a></li>
-                <li><a href="https://www.diychatroom.com/">June 2023</a></li>
-                <li><a href="https://www.diychatroom.com/">May 2023</a></li>
-                <li><a href="https://www.diychatroom.com/">April 2023</a></li>
-              </ol>
+        <!-- Blog Posts -->
+        <div class="recents">
+          <h1>Blog Posts</h1>
+          <div *ngIf="blogPost && blogPost.length > 0">
+            <div *ngFor="let post of blogPost">
+              <div class="card w-100">
+                <div class="card-body">
+                  <h2><a href="post/{{post.slug}}">{{ post.title }}</a></h2>
+                  <p>{{ post.body }}</p>
+                </div>
+              </div>
             </div>
-
-            <div class="p-3">
-              <h4 class="font-italic">Elsewhere</h4>
-              <ol class="list-unstyled">
-                <!-- Links to External Platforms -->
-                <li><a href="https://github.com/ZainabNugget/WT-GP.git">GitHub</a></li>
-                <li><a href="https://github.com/ZainabNugget/WT-GP.git">Twitter</a></li>
-                <li><a href="https://github.com/ZainabNugget/WT-GP.git">Facebook</a></li>
-                <li><a href="https://github.com/ZainabNugget/WT-GP.git">Instagram</a></li>
-              </ol>
-            </div>
-          </aside>
+          </div>
+          <div *ngIf="!blogPost || blogPost.length === 0">
+            No blog post data available.
+          </div>
         </div>
       </div>
+
+      <!-- Sidebar -->
+      <aside class="col-md-4 blog-sidebar">
+        <div class="p-3 mb-3 bg-light rounded">
+          <h4 class="font-italic">About</h4>
+          <p class="mb-0">This is a book review and recommendations website, where users converse about books they read. There are several book clubs depending on your choice of books</p>
+        </div>
+
+        <div class="p-3">
+          <h4 class="font-italic">Archives</h4>
+          <ol class="list-unstyled mb-0">
+            <!-- List of Archives -->
+            <li><a href="https://www.diychatroom.com/">March 2024</a></li>
+            <li><a href="https://www.diychatroom.com/">February 2024</a></li>
+            <li><a href="https://www.diychatroom.com/">January 2024</a></li>
+            <li><a href="https://www.diychatroom.com/">December 2023</a></li>
+            <li><a href="https://www.diychatroom.com/">November 2023</a></li>
+            <li><a href="https://www.diychatroom.com/">October 2023</a></li>
+            <li><a href="https://www.diychatroom.com/">September 2023</a></li>
+            <li><a href="https://www.diychatroom.com/">August 2023</a></li>
+            <li><a href="https://www.diychatroom.com/">July 2023</a></li>
+            <li><a href="https://www.diychatroom.com/">June 2023"></a></li>
+            <li><a href="https://www.diychatroom.com/">May 2023</a></li>
+            <li><a href="https://www.diychatroom.com/">April 2023</a></li>
+          </ol>
+        </div>
+
+        <div class="p-3">
+          <h4 class="font-italic">Elsewhere</h4>
+          <ol class="list-unstyled">
+            <!-- Links to External Platforms -->
+            <li><a href="https://github.com/ZainabNugget/WT-GP.git">GitHub</a></li>
+            <li><a href="https://github.com/ZainabNugget/WT-GP.git">Twitter</a></li>
+            <li><a href="https://github.com/ZainabNugget/WT-GP.git">Facebook</a></li>
+            <li><a href="https://github.com/ZainabNugget/WT-GP.git">Instagram</a></li>
+          </ol>
+        </div>
+      </aside>
     </div>
   </div>
-  </div>
+
   <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
