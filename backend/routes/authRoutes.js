@@ -76,8 +76,15 @@ router.post('/login', async (req, res) => {
 // =========== END OF LOGIN =================
 
 // =========== LOGS USER OUT  =================
-router.post('/logout', async (req, res) => {
-    res.clearCookie('jwt').send('Cookie cleared successfully');
+router.get('/logout', async (req, res) => {
+    // res.clearCookie('jwt').send('Cookie cleared successfully');
+    res.clearCookie('jwt', {
+        httpOnly: true,
+        sameSite: 'strict',
+        path: '/',
+      });
+      res.send('Cookie cleared successfully');
+    console.log("its working?")
 })
 // =========== END OF LOG OUT =================
 

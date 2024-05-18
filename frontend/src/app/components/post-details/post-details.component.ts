@@ -40,15 +40,15 @@ export class PostDetailsComponent implements OnInit {
       username: "",
       commentId: ""
     })
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params: { [x: string]: string; }) => {
       this.slug = params['slug'];
       console.log(this.slug)
       this.http.get(API_ENDPOINT + `/${this.slug}`)
         .subscribe(
-          (data) => {
+          (data:any) => {
             this.blogPost = data; // Store the fetched data in the property
           },
-          (error) => {
+          (error:any) => {
             console.error('Error fetching blog post:', error);
           }
         );
@@ -67,7 +67,7 @@ export class PostDetailsComponent implements OnInit {
             console.log(false)
           }
         },
-          (err) => {
+          (err:any) => {
             console.log("There was an error getting the user, try logging in!")
           })
     } catch (error) {
@@ -78,7 +78,7 @@ export class PostDetailsComponent implements OnInit {
   delete(): void {
     this.http.post(API_ENDPOINT + "/delete", this.blogPost, {
       withCredentials: true
-    }).subscribe(() => this.router.navigate(['/']), (err) => {
+    }).subscribe(() => this.router.navigate(['/']), (err:any) => {
       console.log(err)
     })
     this.router.navigate(['/']);
@@ -104,7 +104,7 @@ export class PostDetailsComponent implements OnInit {
     if (this.username != undefined) {
       this.http.post(API_ENDPOINT + '/comments', comments, ({
         withCredentials: true
-      })).subscribe((err) => {
+      })).subscribe((err:any) => {
         console.log(err);
       })
     } else {

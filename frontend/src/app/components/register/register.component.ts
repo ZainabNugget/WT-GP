@@ -44,7 +44,7 @@ export class RegisterComponent implements OnInit{
     } else {
       this.http.post(API_ENDPOINT+"/register", user, {
         withCredentials:true
-      }).subscribe(()=>this.router.navigate(['/']),(err) => {
+      }).subscribe(()=>this.router.navigate(['/']),(err:any) => {
         this.errorMessage = err.error.message
         console.log("Error", err.error.message)
       })

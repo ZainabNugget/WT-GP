@@ -24,11 +24,11 @@ export class BlogComponent {
     // Fetch the blog post data from the backend
     this.http.get<any>(API_ENDPOINT+'/blog-post')
       .subscribe(
-        (data) => {
+        (data:any) => {
           this.blogPost = data; // Store the fetched data in the property
           console.log(this.blogPost)
         },
-        (error) => {
+        (error:any) => {
           console.error('Error fetching blog post:', error);
         }
       );

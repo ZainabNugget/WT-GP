@@ -48,7 +48,7 @@ export class LoginComponent  implements OnInit{
           this.router.navigate(['/'])
           Emitters.authEmitter.emit(true);
         },
-        (err) => {
+        (err:any) => {
         this.errorMessage = err.error.message
         console.log("Error", err.error.message)
         Emitters.authEmitter.emit(false);

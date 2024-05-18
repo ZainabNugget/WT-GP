@@ -17,7 +17,7 @@ app.use(session({
   resave: false, // Whether to save the session even if it's not modified
   saveUninitialized: false, // Whether to save uninitialized sessions
   cookie: {
-      secure: false, // Set to true if using HTTPS
+      secure: true, 
       maxAge: 24 * 60 * 60 * 1000 // Session duration (1 day)
   }
 }));
