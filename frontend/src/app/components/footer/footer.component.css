@@ -1,0 +1,12 @@
+.footer {
+    background-color: #22092c;
+    color: white; 
+  }
+  
+  .footer a {
+    color: white; 
+  }
+  
+  .footer .text-muted {
+    color: #6c757d !important; 
+  }
