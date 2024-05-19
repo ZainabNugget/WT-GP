@@ -1,6 +1,7 @@
 <!-- Only admins can make posts or blogs -->
 <div class="container">
     <h1 class="mb-4">New Article</h1>
+    <p class="alert alert-warning" *ngIf="errorMessage">{{ errorMessage }}</p>    
     <form [formGroup]="form"  (submit)="post()"  method="POST">
         <div class="form-group" >
             <label for="title">Title</label>

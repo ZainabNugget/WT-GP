@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { takeWhile } from 'rxjs';
 import { API_ENDPOINT } from '../../../config';
 import { Emitters } from '../../emitters/authEmitter';
+import { ApiService } from '../../service/api.service';
 import { PostDetailsComponent } from '../post-details/post-details.component';
 
 @Component({
@@ -27,7 +28,8 @@ export class AdminComponent {
   constructor(
     private FormBuilder: FormBuilder,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private apiService: ApiService
 ){}
 
 ngOnInit(): void {
@@ -49,7 +51,7 @@ ngOnInit(): void {
 
   post(): void{
       let post = this.form.getRawValue()
-      post.username = this.username
+      post.username = this.username;
       if(post.title == '' || post.body == ''||post.summary==""){
         this.errorMessage = "Please enter your details!"
       } else {
@@ -62,7 +64,6 @@ ngOnInit(): void {
           this.errorMessage = "We could not post your blog! :( "
           console.log("Error", err)
         })
-        window.location.reload()
       } 
   }
 

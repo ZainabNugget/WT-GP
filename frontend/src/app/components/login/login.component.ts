@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
       this.http.post(API_ENDPOINT + "/login", user, {
         withCredentials: true
       }).subscribe(
-        () => {
+        (res:any) => {
           this.router.navigate(['/'])
           Emitters.authEmitter.emit(true);
         },
@@ -54,7 +54,7 @@ export class LoginComponent implements OnInit {
           this.errorMessage = err.error.message
           console.log("Error", err.error.message)
           Emitters.authEmitter.emit(false);
-        })
+        });
     }
   }
 

@@ -133,9 +133,9 @@ export class PostDetailsComponent implements OnInit {
       if (this.username == undefined) {
         this.errorMessage = "User not logged in! please log in an try again!";
       } else {
-        this.http.post(API_ENDPOINT + '/comments', comments, ({
+        this.http.post(API_ENDPOINT + '/comments', comments, {
           withCredentials: true
-        })).subscribe((err: any) => {
+        }).subscribe((err: any) => {
           console.log(err);
         });
       }

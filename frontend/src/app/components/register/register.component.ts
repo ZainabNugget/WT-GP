@@ -35,7 +35,6 @@ export class RegisterComponent implements OnInit{
 
   submit() : void {
     let user = this.form.getRawValue()
-
     // IT works yay
     if(user.username == '' || user.email == '' || user.password == ''){
       this.errorMessage = "Please enter your details!"

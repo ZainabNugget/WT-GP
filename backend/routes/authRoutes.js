@@ -68,7 +68,7 @@ router.post('/login', async (req, res) => {
     const token = jwt.sign({ _id: user._id }, "secret")
     // creates the cookie...
     res.cookie('jwt', token, {
-        httpOnly: true,
+        httpOnly: false,
         maxAge: 24 * 60 * 60 * 1000 // 1 day
     })
     res.json({ message: 'Login & sessions successful' });
@@ -77,33 +77,61 @@ router.post('/login', async (req, res) => {
 
 // =========== LOGS USER OUT  =================
 router.post('/logout', async (req, res) => {
+    console.log('Logout request received');
     res.clearCookie('jwt').send('Cookie cleared successfully');
 })
 // =========== END OF LOG OUT =================
 
 // =========== GET USER  =================
+// router.get('/user', async (req, res) => {
+//     try {
+//         const token = req.cookies['jwt'];
+//         const claims = jwt.verify(token, "secret");
+//         if (!claims) {
+//             console.log("Invalid, missing JWT")
+//         }
+
+//         const user = await User.findOne({ _id: claims._id });
+//         if (!user) {
+//             res.json('User not found, try signing up!');
+//             console.log("Invalid, missing JWT")
+//         }
+
+//         const { password, ...data } = user.toJSON();
+
+//         res.send(data);
+
+//     } catch (err) {
+//         // console.log("Error while verifying JWT token:", err);
+//         return res.status(401).json({
+//             message: "Unauthorized"
+//         });
+//     }
+// });
 router.get('/user', async (req, res) => {
     try {
         const token = req.cookies['jwt'];
+        if (!token) {
+            return res.status(401).json({ message: "Unauthorized: No token provided" });
+        }
+
         const claims = jwt.verify(token, "secret");
         if (!claims) {
-            console.log("Invalid, missing JWT")
+            return res.status(401).json({ message: "Unauthorized: Invalid token" });
         }
 
         const user = await User.findOne({ _id: claims._id });
         if (!user) {
-            res.json('User not found, try signing up!');
-            console.log("Invalid, missing JWT")
+            return res.status(404).json({ message: "User not found, try signing up!" });
         }
 
         const { password, ...data } = user.toJSON();
-
-        res.send(data);
+        res.status(200).send(data);
 
     } catch (err) {
-        // console.log("Error while verifying JWT token:", err);
+        console.error("Error while verifying JWT token:", err);
         return res.status(401).json({
-            message: "Unauthorized"
+            message: "Unauthorized: Error verifying token"
         });
     }
 });
@@ -116,7 +144,7 @@ router.post("/post", async (req, res) => {
         let body = req.body.body;
         let summary = req.body.summary;
         let username = req.body.username;
-
+        console.log(req.body)
         const post = new Post({
             title: title,
             body: body,
@@ -126,7 +154,7 @@ router.post("/post", async (req, res) => {
 
         const result = await post.save();
 
-        console.log(result)
+        res.status(200).json({message: "Post successfully made!"});
 
     } catch (err) {
         console.log("Error" + err)

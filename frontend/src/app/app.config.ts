@@ -5,10 +5,11 @@ import { importProvidersFrom } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { routes } from './app.routes';
+import { ApiService } from './service/api.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
-    importProvidersFrom(HttpClientModule)
+    importProvidersFrom(HttpClientModule,ApiService)
   ]
 };

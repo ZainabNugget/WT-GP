@@ -25,14 +25,14 @@
         <!-- Comments -->
         <div class="col-lg-12">
             <h2>Comments:</h2>
-            <div class="card-body" *ngIf="blogPost.comments.length == 0">
+            <div class="card-body" *ngIf="blogPost && blogPost.comments == 0">
                 <p>No comments yet teehee</p>
             </div>
-            <div *ngIf="blogPost.comments.length > 0">
+            <div *ngIf="blogPost && blogPost.comments.length > 0">
                 <div class="comment" *ngFor="let comment of blogPost.comments">
                     <div class="comment d-flex border-bottom m-2">
                         <div class="comment-meta d-flex">
-                            <h6 class="me-2 bold">**{{ comment.username}}**</h6>
+                            <h6 class="me-2 bold">** {{ comment.username}} **</h6>
                         </div>
                         <div class="card-body ">
                            > {{comment.comment}}
