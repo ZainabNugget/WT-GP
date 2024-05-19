@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { API_ENDPOINT } from '../../../config';
+import { CommentsComponent } from '../comments/comments.component';
 
 @Component({
   selector: 'app-blog',
@@ -24,22 +25,17 @@ export class BlogComponent {
     // Fetch the blog post data from the backend
     this.http.get<any>(API_ENDPOINT+'/blog-post')
       .subscribe(
-        (data:any) => {
+        (data) => {
           this.blogPost = data; // Store the fetched data in the property
+          console.log(this.blogPost)
         },
-        (error:any) => {
+        (error) => {
           console.error('Error fetching blog post:', error);
         }
       );
   }
 
-  searchText: string = '';
-  closestMatch: any;
+  click() : void{
 
-  onSearchInput(event: any) {
-    this.searchText = event.target.value.trim(); // Trim any leading/trailing whitespace
-     this.closestMatch = this.blogPost.filter((post: { title: string; }) => {
-      return post.title.toLowerCase().includes(this.searchText.toLowerCase());
-    });
   }
 }

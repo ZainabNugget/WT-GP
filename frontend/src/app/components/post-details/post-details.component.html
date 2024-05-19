@@ -1,56 +1,115 @@
-<div *ngIf="blogPost && admin">
-    <h1>Blog Posts</h1>
-    <div>
-        <h2>{{ blogPost.title }}</h2>
-        <p>{{ blogPost.summary }}</p>
-        <p>{{ blogPost.body }}</p>
-        <button class="btn btn-danger" (click)="delete()">Delete</button>
-        <button class="btn btn-primary">Edit</button>
-        <!-- COMMENTS -->
+<div class="postdetails">
+  <form class="form">
+    <div *ngIf="blogPost && admin">
+        <div>
+            <h2>{{ blogPost.title }}</h2>
+            <div class="card">
+             <div class="card-body">
+                <p>{{ blogPost.summary }}</p>
+                <p>{{ blogPost.body }}</p>
+                <button class="btn btn-danger" (click)="delete()">Delete</button>
+                <button class="btn btn-primary">Edit</button>
+             </div>
+            </div>
+
+            <!-- COMMENTS -->
+            <div *ngIf="blogPost.comments.length > 0">
+              <h2>Comments:</h2>
+               <div class="" *ngFor="let comment of blogPost.comments">
+                 <div class="card">
+                  <div class="card-body">
+                    <p>{{ comment.comment }}</p>
+                    <figcaption>{{ comment.username }}</figcaption>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="blogPost.comments.length == 0">
+                <p>No comments yet teehee</p>
+            </div>
+        </div>
+    </div>
+    <!-- End of comments -->
+
+    <div *ngIf="blogPost && !admin">
+        <div>
+            <h2>{{ blogPost.title }}</h2>
+            <div class="card">
+                <div class="card-body">
+                   <p>{{ blogPost.summary }}</p>
+                   <p>{{ blogPost.body }}</p>
+                </div>
+            </div>
+        </div>
         <div *ngIf="blogPost.comments.length > 0">
             <h1>Comments:</h1>
             <div class="" *ngFor="let comment of blogPost.comments">
+             <div class="card">
+               <div class="card-body">
                 <p>{{ comment.comment }}</p>
                 <figcaption>{{ comment.username }}</figcaption>
+               </div>
+             </div>
             </div>
         </div>
         <div *ngIf="blogPost.comments.length == 0">
             <p>No comments yet teehee</p>
         </div>
     </div>
-</div>
-<!-- End of comments -->
-<div *ngIf="blogPost && !admin">
-    <h1>Blog Posts</h1>
-    <div>
-        <h2>{{ blogPost.title }}</h2>
-        <p>{{ blogPost.summary }}</p>
-        <p>{{ blogPost.body }}</p>
+    <!-- Make A Comment -->
+    <div class="col-lg-12">
+        <div *ngIf="errorMessage" class="alert alert-danger" role="alert">{{ errorMessage }}</div>
+        <h5 class="comment-title">Leave an answer</h5>
+        <form class="row" (submit)="submit()" [formGroup]="commentsForm">
+            <div class="col-12 mb-3">
+                <label for="comment-message">Answer here:</label>
+                <textarea class="form-control" formControlName="comment" id="comment-message" placeholder="Comment here" cols="30"
+                    rows="6"></textarea>
+            </div>
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary" value="Post comment">Submit</button>
+            </div>
+        </form>
     </div>
-    <div *ngIf="blogPost.comments.length > 0">
-        <h1>Comments:</h1>
-        <div class="" *ngFor="let comment of blogPost.comments">
-            <p>{{ comment.comment }}</p>
-            <figcaption>{{ comment.username }}</figcaption>
-        </div>
+  </form>
+
+
+  <aside class="col-md-4 blog-sidebar">
+    <div class="p-3 mb-3 bg-light rounded">
+      <h4 class="font-italic">About</h4>
+      <p class="mb-0">This is a book review and recommendations website, where users converse about books they read. There are several book clubs depending on your choice of books</p>
     </div>
-    <div *ngIf="blogPost.comments.length == 0">
-        <p>No comments yet teehee</p>
+
+    <div class="p-3">
+      <h4 class="font-italic">Archives</h4>
+      <ol class="list-unstyled mb-0">
+        <!-- List of Archives -->
+        <li><a href="https://www.diychatroom.com/">March 2024</a></li>
+        <li><a href="https://www.diychatroom.com/">February 2024</a></li>
+        <li><a href="https://www.diychatroom.com/">January 2024</a></li>
+        <li><a href="https://www.diychatroom.com/">December 2023</a></li>
+        <li><a href="https://www.diychatroom.com/">November 2023</a></li>
+        <li><a href="https://www.diychatroom.com/">October 2023</a></li>
+        <li><a href="https://www.diychatroom.com/">September 2023</a></li>
+        <li><a href="https://www.diychatroom.com/">August 2023</a></li>
+        <li><a href="https://www.diychatroom.com/">July 2023</a></li>
+        <li><a href="https://www.diychatroom.com/">June 2023</a></li>
+        <li><a href="https://www.diychatroom.com/">May 2023</a></li>
+        <li><a href="https://www.diychatroom.com/">April 2023</a></li>
+      </ol>
     </div>
+
+    <div class="p-3">
+      <h4 class="font-italic">Elsewhere</h4>
+      <ol class="list-unstyled">
+        <!-- Links to External Platforms -->
+        <li><a href="https://github.com/ZainabNugget/WT-GP.git">GitHub</a></li>
+        <li><a href="https://github.com/ZainabNugget/WT-GP.git">Twitter</a></li>
+        <li><a href="https://github.com/ZainabNugget/WT-GP.git">Facebook</a></li>
+        <li><a href="https://github.com/ZainabNugget/WT-GP.git">Instagram</a></li>
+      </ol>
+    </div>
+  </aside>
 </div>
-<!-- Make A Comment -->
-<div class="col-lg-12">
-    <div *ngIf="errorMessage" class="alert alert-danger" role="alert">{{ errorMessage }}</div>
-    <h5 class="comment-title">Leave an answer</h5>
-    <form class="row" (submit)="submit()" [formGroup]="commentsForm">
-        <div class="col-12 mb-3">
-            <label for="comment-message">Answer here:</label>
-            <textarea class="form-control" formControlName="comment" id="comment-message" placeholder="Comment here" cols="30"
-                rows="6"></textarea>
-        </div>
-        <div class="col-12">
-            <button type="submit" class="btn btn-primary" value="Post comment">Submit</button>
-        </div>
-    </form>
-</div>
-<!-- End of make a comment -->
+
+
