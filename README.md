@@ -1,33 +1,22 @@
+# The Triad Tales
+This website is for the WT-Web Technology assignment, where we are creating a blog for DIY-ers and HomeOwners
 
-**General**
+## Installation
 
-**To install angular:**
-    ng new blog
+Download the zip folder to run locally.
 
-**To run the angular app:**
-    open terminal then go into the blog directory:
-        cd blog
-        ng serve --open
+You need to run the backend folder seperately from the frontend
+        Backend: ```node server.js```
+        Frontend: ```ng serve --o``` to open in the browser.
 
-**To add a component**
-    go into the frontend folder terminal
-    type ng generate component "component-name"
-    then go into frontend/src/app/app.component.ts and import the component
-        for example: import { NavigationComponent } from './navigation/navigation.component';
-        then add 'NavigationComponent' to the imports within the component
-    Add the component into the app.component.html file
-        you can check the html tag in the component.ts file
 
-**First iteration of backend development**
-    Added sign up and log in mechanisms
-        used:
-            express and cookies
-            components
-            http client
-            API_ENDPOINT as the backend link
-            emitters and services
+## Contributing
 
-**Second iteration of backend development**
-    To add, post details pages and comments
-                 images to the database
+Pull requests are welcome. For major changes, please open an issue first
+to discuss what you would like to change.
 
+Please make sure to update tests as appropriate.
+
+## Used Technology
+
+Angular, Nodejs, Express, MongoDB
