@@ -6,6 +6,7 @@ import { AdminComponent } from './components/admin/admin.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { PostDetailsComponent } from './components/post-details/post-details.component';
+import { ProfileComponent } from './components/profile/profile.component';
 import { RegisterComponent } from './components/register/register.component';
 
 export const routes: Routes = [
@@ -23,6 +24,9 @@ export const routes: Routes = [
     },
     {
         path:'admin', component:AdminComponent
+    },
+    {
+        path:'profile',component:ProfileComponent
     }
 ];
 

@@ -25,6 +25,8 @@ export class AdminComponent {
   username: string="";
   form: FormGroup;
   errorMessage: string = "";
+  filename: string = "";
+
   constructor(
     private FormBuilder: FormBuilder,
     private http: HttpClient,
@@ -37,7 +39,8 @@ ngOnInit(): void {
     title: "",
     body:"",
     summary: "",
-    username:""
+    username:"",
+    filename:"../../../assets/images/"
  });
  this.http.get(API_ENDPOINT+"/user", { withCredentials: true })
  .subscribe((res: any) => {
@@ -52,6 +55,7 @@ ngOnInit(): void {
   post(): void{
       let post = this.form.getRawValue()
       post.username = this.username;
+      post.filename += this.filename;
       if(post.title == '' || post.body == ''||post.summary==""){
         this.errorMessage = "Please enter your details!"
       } else {
@@ -66,6 +70,19 @@ ngOnInit(): void {
         })
       } 
   }
+
+  upload(event: any){
+      const file =event.target.files[0];
+      console.log(file.originalname);
+      const formData = new FormData();
+      formData.append("file", file);
+
+      this.http.post(API_ENDPOINT+'/file',formData,{withCredentials:true})
+      .subscribe((err:any)=>{console.log(err)});
+      let post = this.form.getRawValue();
+      this.filename = file.name;
+  }
+
 
 
 }

@@ -15,9 +15,9 @@
             <label for="description">Body</label>
             <textarea value="" formControlName="body" id="description" class="form-control" placeholder="Write the body of your blog!"></textarea>
           </div>
-          <!-- <div class="form-group">
-            <input type="file" accept="image/*">
-          </div> -->
+          <div class="form-group">
+            <input type="file" (change)="upload($event)" accept="image/*">
+        </div>
           <button type="submit" class="btn btn-primary">Save</button>
     </form>
   </div>

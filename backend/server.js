@@ -9,7 +9,6 @@ const app = express();
 
 app.use(cookieParser());
 
-
 const corsOptions = {
   origin: 'http://localhost:4200', // Your Angular app's URL
   credentials: true, // Allow credentials (cookies)

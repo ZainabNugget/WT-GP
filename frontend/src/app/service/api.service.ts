@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import {  API_ENDPOINT } from "../../config";
+import { Emitters } from '../emitters/authEmitter';
 
 @Injectable({
   providedIn: 'root'
@@ -11,20 +12,19 @@ export class ApiService {
 
   private apiUrl = API_ENDPOINT; //backend url
   constructor(private http: HttpClient) {}
-  // logout(): Observable<any> {
-  //   return this.http.get(`${this.apiUrl}/logout`);
-  // }
-  // getUser(): Observable<any> {
-  //   return this.http.get<any>(`${this.apiUrl}/user`).pipe(
-  //     catchError(this.handleError)
-  //   );
-  // }
 
-    logout(): Observable<any> {
-      return this.http.post(`${this.apiUrl}/logout`, {}).pipe(
-        catchError(this.handleError)
-      );
-    }
+  getUser(): Observable<any> {
+    console.log("get the user yay")
+    return this.http.get(`${this.apiUrl}/user`,{withCredentials:true}).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getAllUser(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/get-users`,{withCredentials:true}).pipe(
+      catchError(this.handleError)
+    );
+  }
 
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'An unknown error occurred!';

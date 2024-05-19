@@ -5,6 +5,22 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/usersSchema');
 const Post = require('../models/postsSchema');
 const Comment = require('../models/commentsSchema');
+const multer = require('multer');
+const imageUrl = "images/";
+const path = require('path');
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, '../../frontend/src/assets/images/'));
+  },
+  filename: function (req, file, cb) {
+    cb(null, `${file.originalname}`);
+  },
+});
+
+// Path to images folder '../frontend/src/assets/images'
+const upload = multer({ storage: storage});
+// const upload = multer({ dest : "../../frontend/src/assets/images/" });
 
 // =========== REGISTER =================
 router.post('/register', async (req, res) => {
@@ -137,6 +153,13 @@ router.get('/user', async (req, res) => {
 });
 // =========== END OF GET USERS  =================
 
+// =========== GET ALL USERS  =================
+router.get('/get-users', async (req, res) => {
+    const users = await User.find({})
+    res.send(users);
+})
+// =========== END OF GET USERS  =================
+
 // =========== MAKE A POST (ADMIN ONLY) =================
 router.post("/post", async (req, res) => {
     try {
@@ -144,12 +167,15 @@ router.post("/post", async (req, res) => {
         let body = req.body.body;
         let summary = req.body.summary;
         let username = req.body.username;
+        let image = req.body.filename;
+
         console.log(req.body)
         const post = new Post({
             title: title,
             body: body,
             summary: summary,
-            username: username
+            username: username,
+            image:image
         })
 
         const result = await post.save();
@@ -257,4 +283,19 @@ router.post('/approve-comment', async (req,res)=>{
 })
 // =========== END OF APPROVE COMMENT =================
 
+// =========== APPROVE COMMENT =================
+router.post('/image', async (req,res)=>{
+    
+})
+// =========== END OF APPROVE COMMENT =================
+
+router.post("/file", upload.single("file"), function (req, res, next) {
+    const file = req.file;
+    if (file) {
+      res.json(file);
+    } else {
+      throw "File not found";
+    }
+  });
+  
 module.exports = router;
