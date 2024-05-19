@@ -17,6 +17,7 @@ export class BlogComponent {
   title: string = "";
   body: string ="";
   showAll: boolean = true;
+  randomPost: number = 0;
 
   constructor(private http: HttpClient){}
 
@@ -26,6 +27,7 @@ export class BlogComponent {
       .subscribe(
         (data:any) => {
           this.blogPost = data; // Store the fetched data in the property
+          this.randomPost = Math.floor(Math.random() * this.blogPost.length-1) + 1;
         },
         (error:any) => {
           console.error('Error fetching blog post:', error);

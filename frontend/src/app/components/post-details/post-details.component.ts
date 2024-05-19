@@ -167,5 +167,4 @@ export class PostDetailsComponent implements OnInit {
   }
   // ================== END ==================
 
-
 }

@@ -1,6 +1,6 @@
-<div class="mt-5" style="height: 80vh;">
-<main class="form-signin w-100 m-auto">
-  <form [formGroup]="form" (submit)="submit()">
+<div id="background-img">
+<main class="form-signin justify-content-center m-auto">
+  <form class="" style="margin-top: 20px;" [formGroup]="form" (submit)="submit()">
     <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
     <p class="alert alert-warning" *ngIf="errorMessage">{{ errorMessage }}</p>    
     <div class="form-floating">
@@ -11,7 +11,6 @@
       <label for="floatingPassword">Password</label>
       <input type="password" class="form-control" formControlName="password" id="floatingPassword" placeholder="Password">
     </div>
-
     <div class="form-check text-start my-3">
       <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
       <label class="form-check-label" for="flexCheckDefault">

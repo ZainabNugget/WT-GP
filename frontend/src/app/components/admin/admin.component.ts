@@ -40,7 +40,7 @@ ngOnInit(): void {
     body:"",
     summary: "",
     username:"",
-    filename:"../../../assets/images/"
+    filename:"../assets/images/"
  });
  this.http.get(API_ENDPOINT+"/user", { withCredentials: true })
  .subscribe((res: any) => {

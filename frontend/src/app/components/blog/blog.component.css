@@ -50,6 +50,7 @@
 
   body {
     background-color: #22092c;
+    /* margin-top: 5vh; */
   }
 
   .box-wrapper {
@@ -58,7 +59,7 @@
     padding: 20px; 
     border-radius: 8px; 
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
-    margin-bottom: 20px; 
+    /* margin-bottom: 20px;  */
   }
 
   .container {
@@ -117,3 +118,16 @@
     display: none;
   }
   
+  #blog-page{
+    background-color: #22092c;
+    margin-top: -15px;
+    padding: 20px;
+  }
+
+.background-img{
+  background-image: url("../../../assets/images/bg.jpg") ;
+  /* background-repeat: no-repeat, repeat ; */
+  object-fit: fill;
+  height: 100%;
+  color: #22092c;
+}

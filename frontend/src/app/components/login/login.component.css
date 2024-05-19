@@ -10,7 +10,8 @@ body {
   align-items: center;
   height: 100vh;
   margin: 0;
-  padding-top: 100px;
+  
+  /* padding-top: 100px; */
 }
 
 .form-signin {
@@ -20,9 +21,17 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   max-width: 400px;
   width: 100%;
-  margin-top: 100px; 
 }
 
 .form-floating {
   margin-bottom: 1rem;
+}
+
+#background-img{
+ padding: 30px;
+  height: 80vh;
+  width: 100vw;
+  background-image: url("../../../assets/images/diytools.jpg");
+  background-repeat: no-repeat, repeat;
+  background-position: center;
 }
