@@ -12,7 +12,7 @@ const path = require('path');
 // Create diskstorage for the images 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, '../../frontend/src/assets/images/'));
+    cb(null, path.join(__dirname, '../assets/images/'));
   },
   filename: function (req, file, cb) {
     cb(null, `${file.originalname}`);
