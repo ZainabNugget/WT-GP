@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { AdminComponent } from '../admin/admin.component';
 import { PostDetailsComponent } from '../post-details/post-details.component';
 import { BlogComponent } from '../blog/blog.component';
+import { ApiService } from '../../service/api.service';
 
 @Component({
   selector: 'app-home',
@@ -26,11 +27,11 @@ export class HomeComponent implements OnInit {
   admin: boolean = false;
 
   constructor(private http: HttpClient,
-    private router: Router) { }
+    private router: Router,
+    private api: ApiService) { }
 
   ngOnInit(): void {
-    this.http.get(API_ENDPOINT+"/user", { withCredentials: true })
-      .subscribe((res: any) => {
+    this.api.getUser().subscribe((res: any) => {
         if(res.role == "user"){
           this.user = true;
         } else {
@@ -42,6 +43,7 @@ export class HomeComponent implements OnInit {
       }, (err:any) => {
         this.message = "You are not logged in!";
         Emitters.authEmitter.emit(false);
+        // console.log("User not logged in")
       })
   }
 }

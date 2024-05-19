@@ -6,6 +6,7 @@ import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { API_ENDPOINT } from '../../../config';
 import { Emitters } from '../../emitters/authEmitter';
+import { ApiService } from '../../service/api.service';
 
 @Component({
   selector: 'app-post-details',
@@ -18,22 +19,24 @@ import { Emitters } from '../../emitters/authEmitter';
   styleUrl: './post-details.component.css'
 })
 export class PostDetailsComponent implements OnInit {
-  slug: string;
-  blogPost: any;
-  user: boolean = false;
-  admin: boolean = false;
-  comments: any;
-  postId: any;
-  commentsForm: FormGroup;
-  username: string = "";
-  errorMessage: string = "";
-  sameuser: boolean = false;
+  slug: string; // for the post to be handled properly
+  blogPost: any; // gets all the posts
+  user: boolean = false; // returns true if role is user
+  admin: boolean = false; // return true if role admin
+  comments: any; // get all the comments 
+  postId: any; // the current postId
+  commentsForm: FormGroup; // comment info 
+  username: string = ""; // current users username
+  errorMessage: string = ""; // error logging
+  sameuser: boolean = false; 
   loggedIn = false;
 
+  // All needed variables for the post-details page
   constructor(private route: ActivatedRoute,
     private http: HttpClient,
     private router: Router,
-    private FormBuilder: FormBuilder) { }
+    private FormBuilder: FormBuilder,
+    private api: ApiService) { }
 
   ngOnInit(): void {
     this.commentsForm = this.FormBuilder.group({
@@ -42,51 +45,59 @@ export class PostDetailsComponent implements OnInit {
       username: "",
       commentId: ""
     })
+    // Get the post slug from the parameters of the website
     this.route.params.subscribe((params: { [x: string]: string; }) => {
       this.slug = params['slug'];
-      console.log(this.slug)
+      // Error logging
+      // console.log(this.slug)
+      
+      // Get the post based on slug
       this.http.get(API_ENDPOINT + `/${this.slug}`)
         .subscribe(
           (data: any) => {
+            // Get all data into the blogpost var
             this.blogPost = data; // Store the fetched data in the property
-            console.log(this.blogPost.approved)
+
+            // Error logging
+            // console.log(this.blogPost.approved)
           },
           (error: any) => {
-            console.error('Error fetching blog post:', error);
+            this.errorMessage = "Error getting post";
           }
         );
     })
     // ================== GET SPECIFIC USER  ==================
     try {
-      this.http.get(API_ENDPOINT + "/user", { withCredentials: true })
-        .subscribe((res: any) => {
-          this.username = res.username;
-          if (this.username == undefined) {
+      this.api.getUser().subscribe((res: any) => {
+          this.username = res.username; //save the current username
+          if (this.username == undefined) { // a bunch of error logging
             console.log("Not logged in!");
             this.loggedIn = false;
           } else {
             this.loggedIn = true;
             if (this.username == this.blogPost.username) {
-              this.sameuser = true;
+              this.sameuser = true; // for the approval buttons
               console.log("This is the same user that made the post :) ")
             } else {
               this.sameuser = false;
               console.log("Not the same user wah")
             }
           }
+
           // Get the role of user or admin
           if (res.role == "user") {
             this.user = true;
-            Emitters.authEmitter.emit(true);
+            Emitters.authEmitter.emit(true); // for navigation
           } else if (res.role == "admin") {
             this.admin = true;
-            Emitters.authEmitter.emit(true);
+            Emitters.authEmitter.emit(true); // for navigation
           } else {
             this.username = "";
           }
         },
           (err: any) => {
-            console.log("There was an error getting the user, try logging in!" + err)
+            // Error logging
+            // console.log("Not logged in!")
           })
     } catch (error) {
       console.log("no user" + error)
@@ -96,11 +107,13 @@ export class PostDetailsComponent implements OnInit {
 
   // ================== DELETE A POST (ADMIN ONLY) ==================
   delete(): void {
+    // Send request to delete the post based on blogpost information
     this.http.post(API_ENDPOINT + "/delete", this.blogPost, {
       withCredentials: true
     }).subscribe(() => this.router.navigate(['/']), (err: any) => {
       console.log(err)
     })
+    // Navigate to home page after your done
     this.router.navigate(['/']);
   }
   // ================== END (ADMIN ONLY) ==================
@@ -108,15 +121,19 @@ export class PostDetailsComponent implements OnInit {
 
   // ================== LIKE A POST ==================
   like(comment: any): void {
+    // Get the comment you want to like
     let comments = this.commentsForm.getRawValue()
     comments.postId = this.blogPost._id;
     comments.username = this.username;
     comments.commentId = comment._id;
+
+    // Post to the server to like the comment
     this.http.post(API_ENDPOINT + '/like', comments, ({
       withCredentials: true
     })).subscribe((err: any) => {
       console.log(err);
     });
+
     // Reload to show the final work :()
     window.location.reload();
   }
@@ -124,9 +141,12 @@ export class PostDetailsComponent implements OnInit {
 
   // ================== SUBMIT A COMMENT ==================
   submit(): void {
+    // Get the users comment info into a form
     let comments = this.commentsForm.getRawValue()
     comments.postId = this.blogPost._id;
     comments.username = this.username;
+
+    // Some error handling!
     if (!this.loggedIn) {
       this.errorMessage = "User not logged in!"
     } else {
@@ -136,7 +156,7 @@ export class PostDetailsComponent implements OnInit {
         this.http.post(API_ENDPOINT + '/comments', comments, {
           withCredentials: true
         }).subscribe((err: any) => {
-          console.log(err);
+          this.errorMessage = "An error occured! Try again later";
         });
       }
       window.location.reload()

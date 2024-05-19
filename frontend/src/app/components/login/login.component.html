@@ -2,12 +2,15 @@
 <main class="form-signin justify-content-center m-auto">
   <form class="" style="margin-top: 20px;" [formGroup]="form" (submit)="submit()">
     <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+    <!-- Error logging -->
     <p class="alert alert-warning" *ngIf="errorMessage">{{ errorMessage }}</p>    
     <div class="form-floating">
+      <!-- Email of user -->
       <label for="floatingInput">Email address</label>
       <input type="email" class="form-control" formControlName="email" id="floatingInput" placeholder="name@example.com">
     </div>
     <div class="form-floating">
+      <!-- Password -->
       <label for="floatingPassword">Password</label>
       <input type="password" class="form-control" formControlName="password" id="floatingPassword" placeholder="Password">
     </div>
@@ -17,6 +20,7 @@
         Remember me
       </label>
     </div>
+    <!-- Sign in button -->
     <button class="btn btn-primary w-100 py-2" type="submit">Sign in</button>
   </form>
 </main>

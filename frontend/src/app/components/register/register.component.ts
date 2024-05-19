@@ -26,6 +26,7 @@ export class RegisterComponent implements OnInit{
   ){}
 
   ngOnInit(): void {
+    // Build the form
     this.form = this.FormBuilder.group({
       username: "",
       email:"",
@@ -35,21 +36,25 @@ export class RegisterComponent implements OnInit{
 
   submit() : void {
     let user = this.form.getRawValue()
-    // IT works yay
+    // Check if empty, and also validate the email
     if(user.username == '' || user.email == '' || user.password == ''){
       this.errorMessage = "Please enter your details!"
     } else if(!this.validateEmail(user.email)){
       this.errorMessage = "Email is invalid, please try again!"
     } else {
+      // Post to server to register the user.
       this.http.post(API_ENDPOINT+"/register", user, {
         withCredentials:true
+        // Navigate the user to the homepage after successful registeration
       }).subscribe(()=>this.router.navigate(['/']),(err:any) => {
         this.errorMessage = err.error.message
-        console.log("Error", err.error.message)
+        // Error log
+        // console.log("Error", err.error.message)
       })
     }
   }
 
+  // Validate email with regex
   validateEmail = (email: any) => {
     var emailRegex = /^[\w-]+(?:\.[\w-]+)*@(?:[\w-]+\.)+[a-zA-Z]{2,7}$/; //regex to match email
       if(email.match(emailRegex)){

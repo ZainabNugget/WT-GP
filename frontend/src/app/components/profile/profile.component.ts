@@ -16,9 +16,10 @@ import { ApiService } from '../../service/api.service';
   styleUrl: './profile.component.css'
 })
 export class ProfileComponent implements OnInit{
-  users: any;
-  allUsers: any;
-  admin: boolean = false;
+  // Under construction... may not finish in time
+  users: any; // get current user
+  allUsers: any; // get all users
+  admin: boolean = false; // if admin : true
   constructor(private api:ApiService,
     private http:HttpClient,
     private router: Router){}
@@ -39,6 +40,7 @@ export class ProfileComponent implements OnInit{
           console.error('Error fetching blog post:', error);
         }
       );
+      // Display all users for the current admin
       this.api.getAllUser().subscribe(
         (data:any) => {
           this.allUsers = data; // Store the fetched data in the property

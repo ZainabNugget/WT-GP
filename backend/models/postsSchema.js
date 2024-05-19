@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const slugify = require('slugify');
 
+// This schema includes the title, summary, body, image path, username and comments
 const postSchema = new mongoose.Schema({
     title: {
       type: String,
@@ -56,4 +57,5 @@ const postSchema = new mongoose.Schema({
     next()
   })
 
+//  Export the schema to mongodb
 module.exports = mongoose.model('Posts', postSchema)

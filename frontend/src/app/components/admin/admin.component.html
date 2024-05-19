@@ -1,21 +1,24 @@
-<!-- Only admins can make posts or blogs -->
 <div class="container">
     <h1 class="mb-4">New Article</h1>
     <p class="alert alert-warning" *ngIf="errorMessage">{{ errorMessage }}</p>    
     <form [formGroup]="form"  (submit)="post()"  method="POST">
         <div class="form-group" >
+          <!-- Title for the question -->
             <label for="title">Title</label>
             <input required value="" type="text" formControlName="title" id="title" class="form-control">
           </div>
           <div class="form-group">
+            <!-- Summary of the quesiton -->
             <label for="description">Summary</label>
             <textarea value="" formControlName="summary" id="description" class="form-control" maxlength="200" placeholder="Write a summary"></textarea>
           </div>
           <div class="form-group">
+            <!-- Body of the question -->
             <label for="description">Body</label>
             <textarea value="" formControlName="body" id="description" class="form-control" placeholder="Write the body of your blog!"></textarea>
           </div>
           <div class="form-group">
+            <!-- Upload images if needed -->
             <input type="file" (change)="upload($event)" accept="image/*">
         </div>
           <button type="submit" class="btn btn-primary">Save</button>

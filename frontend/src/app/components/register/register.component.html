@@ -4,14 +4,17 @@
     <h1 class="h3 mb-3 fw-normal">Registration</h1>
     <p class="alert alert-warning" *ngIf="errorMessage">{{ errorMessage }}</p>    
     <div class="form-floating">
+      <!-- Username  -->
       <label for="floatingInput">Username</label>
       <input type="text" class="form-control" formControlName="username" id="floatingInput">
     </div>
     <div class="form-floating">
+      <!-- Email address -->
       <label for="floatingInput">Email address</label>
       <input type="email" class="form-control" formControlName="email" placeholder="name@example.com">
     </div>
     <div class="form-floating">
+      <!-- Password -->
       <label for="floatingPassword">Password</label>
       <input type="password" class="form-control" formControlName="password" id="floatingPassword" placeholder="Password">
     </div>

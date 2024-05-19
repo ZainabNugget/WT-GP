@@ -19,12 +19,13 @@ import { catchError } from 'rxjs';
   styleUrl: './navigation.component.css'
 })
 export class NavigationComponent implements OnInit{
-    authenticated = false
-    errorMessage: string ="";
+    authenticated = false; // for nav
+    errorMessage: string =""; // error loggin
 
     constructor(private http:HttpClient,
       private router: Router,
       private apiService: ApiService){}
+
   ngOnInit(): void {
     Emitters.authEmitter.subscribe((auth:boolean) => {
       this.authenticated = auth
@@ -35,14 +36,16 @@ export class NavigationComponent implements OnInit{
     if(!this.authenticated){
       console.log("yippe")
     } else {
-      this.http.post(API_ENDPOINT+"/logout",{},{ withCredentials:true
-    })
+      // This gave me so much trouble T-T
+      this.http.post(API_ENDPOINT+"/logout",{},{ withCredentials:true})
     .subscribe(( )=>{
+      // If not logged in
       this.authenticated = false
       Emitters.authEmitter.emit(false);
     },(err:any)=>{
+      // Error loggin
       console.log("its not working")
-      console.log(err)
+      // console.log(err)
     });
     }
   

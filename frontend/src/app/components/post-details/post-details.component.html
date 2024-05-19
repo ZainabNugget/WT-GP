@@ -7,7 +7,9 @@
             </section>
             <p>{{ blogPost.summary }}</p>
             <p>{{ blogPost.body }}</p>
-            <img src="{{blogPost.image}}" alt="this is a photo" />
+            <div *ngIf="blogPost.imagel">
+                <img src="{{blogPost.image}}" alt="this is a photo" height="400" width="400"/>
+            </div>
             <!-- If approved show approval -->
             <div *ngIf="blogPost.approved">
                 <p>Approved Question</p>
@@ -91,21 +93,10 @@
         </div>
 
         <div class="p-3">
-            <h4 class="font-italic">Archives</h4>
+            <h4 class="font-italic">Other Chatrooms</h4>
             <ol class="list-unstyled mb-0">
                 <!-- List of Archives -->
-                <li><a href="https://www.diychatroom.com/">March 2024</a></li>
-                <li><a href="https://www.diychatroom.com/">February 2024</a></li>
-                <li><a href="https://www.diychatroom.com/">January 2024</a></li>
-                <li><a href="https://www.diychatroom.com/">December 2023</a></li>
-                <li><a href="https://www.diychatroom.com/">November 2023</a></li>
-                <li><a href="https://www.diychatroom.com/">October 2023</a></li>
-                <li><a href="https://www.diychatroom.com/">September 2023</a></li>
-                <li><a href="https://www.diychatroom.com/">August 2023</a></li>
-                <li><a href="https://www.diychatroom.com/">July 2023</a></li>
-                <li><a href="https://www.diychatroom.com/">June 2023</a></li>
-                <li><a href="https://www.diychatroom.com/">May 2023</a></li>
-                <li><a href="https://www.diychatroom.com/">April 2023</a></li>
+                <li><a href="https://www.diychatroom.com/">DIY Chatroom</a></li>
             </ol>
         </div>
 
@@ -114,9 +105,9 @@
             <ol class="list-unstyled">
                 <!-- Links to External Platforms -->
                 <li><a href="https://github.com/ZainabNugget/WT-GP.git">GitHub</a></li>
-                <li><a href="https://github.com/ZainabNugget/WT-GP.git">Twitter</a></li>
-                <li><a href="https://github.com/ZainabNugget/WT-GP.git">Facebook</a></li>
-                <li><a href="https://github.com/ZainabNugget/WT-GP.git">Instagram</a></li>
+                <li><a href="#">Twitter</a></li>
+                <li><a href="#">Facebook</a></li>
+                <li><a href="#">Instagram</a></li>
             </ol>
         </div>
     </aside>

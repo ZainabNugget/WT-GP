@@ -19,9 +19,10 @@ import { API_ENDPOINT } from '../../../config';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  form: FormGroup;
-  errorMessage: string = '';
+  form: FormGroup; // Form for server
+  errorMessage: string = ''; // Error logging
 
+  // All variables needed for the login to work
   constructor(
     private FormBuilder: FormBuilder,
     private http: HttpClient,
@@ -29,6 +30,7 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    // Build the form using Form Builder
     this.form = this.FormBuilder.group({
       email: '',
       password: ''
@@ -37,22 +39,28 @@ export class LoginComponent implements OnInit {
 
   submit(): void {
     let user = this.form.getRawValue()
-    // IT works yay
+    // Check for any faults, validation of the email 
     if (user.username == '' || user.email == '' || user.password == '') {
+      // Error logging!
       this.errorMessage = "Please enter your details!"
     } else if (!this.validateEmail(user.email)) {
+      // Error  logging!
       this.errorMessage = "Email is invalid, please try again!"
     } else {
+      // Send to server and handle the logging in process, send the user information as well
       this.http.post(API_ENDPOINT + "/login", user, {
         withCredentials: true
       }).subscribe(
         (res:any) => {
-          this.router.navigate(['/'])
+          // Navigate after successful login!
+          this.router.navigate(['/']);
+          // True for navigation
           Emitters.authEmitter.emit(true);
         },
         (err: any) => {
+          // Error loggin
           this.errorMessage = err.error.message
-          console.log("Error", err.error.message)
+          // console.log("Error", err.error.message)
           Emitters.authEmitter.emit(false);
         });
     }
